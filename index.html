@@ -214,6 +214,9 @@ body.is-admin nav .admin-only{display:inline-block!important}
 code{font-family:var(--mono);background:var(--surface-2);padding:2px 6px;border-radius:5px;color:var(--accent)}
 #uNueva{background:var(--accent-soft);border:1px solid var(--accent);border-radius:8px;padding:10px 12px;margin-top:12px;color:var(--fg)}
 
+/* --- Calendario de push --- */
+.cal .ps{font-size:.7rem;color:var(--fg);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-left:2px solid var(--accent);padding-left:4px}
+@media (max-width:640px){.cal .ps{display:none}}
 /* --- Mi panel y Reportes --- */
 .tw-off{display:none!important}
 .twk{border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;background:var(--surface);margin-bottom:10px}
@@ -393,6 +396,7 @@ tr.det td{background:var(--surface-2);white-space:normal}
     <div class="seg" data-seg="cal" role="tablist" aria-label="Tipo de calendario">
       <button type="button" data-v="juegos" data-perm="cal_juegos" aria-selected="true">Calendario de juegos</button>
       <button type="button" data-v="contenido" data-perm="cal_contenido" aria-selected="false">Calendario de contenido</button>
+      <button type="button" data-v="push" data-perm="cal_push" aria-selected="false">Calendario de push</button>
     </div>
     <div class="toolbar"><button class="btn" id="calPrev" type="button" aria-label="Mes anterior">‹</button><strong id="calTitle" style="min-width:140px;text-align:center;text-transform:capitalize"></strong><button class="btn" id="calNext" type="button" aria-label="Mes siguiente">›</button><span class="sp"></span>
       <div class="legend" id="bonoLegend"></div><button type="button" class="btn sm" id="catBtn">Editar lista de juegos</button><button type="button" class="btn sm" id="catCBtn">Editar tipos y formatos</button></div>
@@ -416,6 +420,7 @@ tr.det td{background:var(--surface-2);white-space:normal}
             <label data-mode="juegos">Nota del día<textarea id="cNota" rows="3" placeholder="Ej.: Bono sorpresa, anunciar en el canal a las 18"></textarea></label>
             <div data-mode="contenido" class="cj-wrap"><span class="cj-lbl">Publicaciones del día</span><div id="cPubs"></div><button type="button" class="btn sm" id="cPubAdd">+ Agregar publicación</button></div>
             <label data-mode="contenido">Nota del día<textarea id="cNotaC" rows="2" placeholder="Ej.: usar foto de ganadores"></textarea></label>
+            <label data-mode="push">Notificaciones push (una por línea, con la hora adelante)<textarea id="cPush" rows="5" placeholder="Ej.: 12:00 Bono de bienvenida 100%&#10;20:30 Arranca el torneo de Ruleta"></textarea></label>
           </div>
           <div style="display:flex;gap:8px;margin-top:10px"><button class="btn pri" type="submit">Guardar</button><button class="btn" type="button" id="calClear">Vaciar día</button></div>
         </form>
@@ -537,7 +542,7 @@ document.querySelectorAll('nav.tabs button').forEach(b=>b.onclick=()=>setTab(b.d
 const S={checks:{},errAll:{},tareas:[],checksDia:{},checksSem:{},diario:{},errores:null,horarios:null,equipo:null,juegos:[],cal:{},ready:false,calReady:false};
 let db=null;
 let hMes=mesHoy,spMes=mesHoy,cjMes=mesHoy,calMes=mesHoy,mensMes=mesHoy,selDay=null;
-let spView=store.get('spView')==='publi'?'publi':'spam', calMode=store.get('calMode')==='contenido'?'contenido':'juegos';
+let spView=store.get('spView')==='publi'?'publi':'spam', calMode=['contenido','push'].includes(store.get('calMode'))?store.get('calMode'):'juegos';
 let spDesde=mesHoy+'-01',spHasta=`${mesHoy}-${String(daysIn(mesHoy)).padStart(2,'0')}`;
 $('#hMes').value=hMes;$('#spMes').value=spMes;$('#spDesde').value=spDesde;$('#spHasta').value=spHasta;$('#cjMes').value=cjMes;$('#fFecha').value=today;$('#gFecha').value=today;
 
@@ -957,17 +962,17 @@ function renderCal(){
   let h=['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'].map(d=>`<div class="dh">${d}</div>`).join('');
   for(let i=0;i<off;i++)h+='<div class="d blank"></div>';
   for(let d=1;d<=nd;d++){const c=data[String(d)]||{};const isT=`${calMes}-${String(d).padStart(2,'0')}`===today;
-    const body=calMode==='juegos'?(()=>{const rj=juegosRep(calMes,d),cj=rj.c,jj=juegosDe(cj);const inner=jj.slice(0,2).map(j=>(j.juego?`<span class="cchip" style="background:${colorJuego(j.juego)}" title="${esc(j.juego)}">${esc(j.juego)}</span>`:'')+(j.horario?`<span class="hr">${esc(j.horario)}</span>`:'')).join('')+(jj.length>2?`<span class="more">+${jj.length-2} más</span>`:'')+(cj.nota?`<span class="nt" title="${esc(cj.nota)}">📝 ${esc(cj.nota)}</span>`:'');return rj.desde&&inner?`<span class="rep-wrap" title="Se repite de ${mesLabel(rj.desde)}" style="display:flex;flex-direction:column;gap:3px">${inner}</span>`:inner})():(()=>{const r=contenidoDe(calMes,d);if(!r.items.length)return '';const inner=celdaContenido(r.items);return r.desde?`<span class="rep-wrap" title="Se repite de ${mesLabel(r.desde)}" style="display:flex;flex-direction:column;gap:3px">${inner}</span>`:inner})();
+    const body=calMode==='juegos'?(()=>{const rj=juegosRep(calMes,d),cj=rj.c,jj=juegosDe(cj);const inner=jj.slice(0,2).map(j=>(j.juego?`<span class="cchip" style="background:${colorJuego(j.juego)}" title="${esc(j.juego)}">${esc(j.juego)}</span>`:'')+(j.horario?`<span class="hr">${esc(j.horario)}</span>`:'')).join('')+(jj.length>2?`<span class="more">+${jj.length-2} más</span>`:'')+(cj.nota?`<span class="nt" title="${esc(cj.nota)}">📝 ${esc(cj.nota)}</span>`:'');return rj.desde&&inner?`<span class="rep-wrap" title="Se repite de ${mesLabel(rj.desde)}" style="display:flex;flex-direction:column;gap:3px">${inner}</span>`:inner})():calMode==='push'?((c.push||[]).slice(0,3).map(x=>`<span class="ps" title="${esc(x)}">${esc(x)}</span>`).join('')+((c.push||[]).length>3?`<span class="more">+${c.push.length-3} más</span>`:'')):(()=>{const r=contenidoDe(calMes,d);if(!r.items.length)return '';const inner=celdaContenido(r.items);return r.desde?`<span class="rep-wrap" title="Se repite de ${mesLabel(r.desde)}" style="display:flex;flex-direction:column;gap:3px">${inner}</span>`:inner})();
     h+=`<button type="button" class="d ${isT?'today':''} ${selDay===d?'sel':''}" data-d="${d}"><span class="num">${d}</span>${body}</button>`}
   $('#cal').innerHTML=h;
-  $('#bonoLegend').innerHTML=calMode==='juegos'?S.juegos.map(j=>`<span><span class="cchip" style="background:${colorJuego(j.nombre)}">${esc(j.nombre)}</span> ${esc(j.bono||'')}</span>`).join(''):contCfg().tipos.concat(contCfg().formatos).map(x=>chipC(x.nombre,x.color)).join('');
+  $('#bonoLegend').innerHTML=calMode==='push'?'':calMode==='juegos'?S.juegos.map(j=>`<span><span class="cchip" style="background:${colorJuego(j.nombre)}">${esc(j.nombre)}</span> ${esc(j.bono||'')}</span>`).join(''):contCfg().tipos.concat(contCfg().formatos).map(x=>chipC(x.nombre,x.color)).join('');
   const rsel=selDay?contenidoDe(calMes,selDay):{desde:null},rjs=selDay?juegosRep(calMes,selDay):{desde:null};
-  $('#calHint').textContent=calMode==='juegos'?(rjs.desde?`Se repite de ${mesLabel(rjs.desde)}. Si lo cambiás, rige desde este mes en adelante.`:'Juego del día y horario. Se repite todos los meses hasta que lo cambies.'):(rsel.desde?`Se repite de ${mesLabel(rsel.desde)}. Si lo cambiás, rige desde este mes en adelante.`:'Lo que se publica en redes ese día. Se repite todos los meses hasta que lo cambies.');
-  $('#catBtn').hidden=calMode!=='juegos';$('#catCBtn').hidden=calMode!=='contenido';if(calMode==='juegos')$('#catCont').hidden=true;else $('#catJuegos').hidden=true;
+  $('#calHint').textContent=calMode==='push'?'Notificaciones push que salen ese día, con su hora.':calMode==='juegos'?(rjs.desde?`Se repite de ${mesLabel(rjs.desde)}. Si lo cambiás, rige desde este mes en adelante.`:'Juego del día y horario. Se repite todos los meses hasta que lo cambies.'):(rsel.desde?`Se repite de ${mesLabel(rsel.desde)}. Si lo cambiás, rige desde este mes en adelante.`:'Lo que se publica en redes ese día. Se repite todos los meses hasta que lo cambies.');
+  $('#catBtn').hidden=calMode!=='juegos';$('#catCBtn').hidden=calMode!=='contenido';if(calMode==='juegos')$('#catCont').hidden=true;else $('#catJuegos').hidden=true;if(calMode==='push')$('#catCont').hidden=true;
   if(!$('#calForm').contains(document.activeElement)&&selDay){const c=juegosRep(calMes,selDay).c;const jj=juegosDe(c);
     $('#cJuegos').innerHTML=(jj.length?jj:[{}]).map(filaJuego).join('');$('#cNota').value=c.nota||'';
     const pd=pubsDe(contenidoDe(calMes,selDay).items);
-    $('#cPubs').innerHTML=(pd.pubs.length?pd.pubs:[{}]).map(filaPub).join('');$('#cNotaC').value=pd.nota}
+    $('#cPubs').innerHTML=(pd.pubs.length?pd.pubs:[{}]).map(filaPub).join('');$('#cNotaC').value=pd.nota;$('#cPush').value=((data[String(selDay)]||{}).push||[]).join('\n')}
   renderCatalogo();renderCatCont();
   if(selDay){$('#dayTitle').textContent=`${selDay} de ${MESES[m-1]}`;$('#calForm').hidden=false}
   else{$('#dayTitle').textContent='Elegí un día';$('#calForm').hidden=true}
@@ -979,6 +984,7 @@ $('#calForm').onsubmit=e=>{e.preventDefault();if(!need()||!selDay)return;
   const dias=cloneMonth(calMes);const c=dias[String(selDay)]=dias[String(selDay)]||{};
   if(calMode==='juegos'){const jj=[...document.querySelectorAll('#cJuegos .cj-row')].map(r=>({juego:(r.querySelector('.cj-j')||{value:''}).value,horario:r.querySelector('.cj-h').value.trim()})).filter(j=>j.juego||j.horario);
     delete c.juego;delete c.horario;c.juegos=jj;const n=$('#cNota').value.trim();if(n)c.nota=n;else delete c.nota}
+  else if(calMode==='push'){c.push=$('#cPush').value.split('\n').map(x=>x.trim()).filter(Boolean);if(!c.push.length)delete c.push}
   else{const pubs=[...document.querySelectorAll('#cPubs .cj-row')].map(r=>({tipo:(r.querySelector('.cp-t')||{value:''}).value,hora:r.querySelector('.cp-h').value.trim(),formato:(r.querySelector('.cp-f')||{value:''}).value})).filter(x=>x.tipo||x.hora||x.formato);
     const n=$('#cNotaC').value.trim();c.contenido=pubs.concat(n?[{nota:n}]:[])}
   const a=document.activeElement;if(a&&a.blur)a.blur();saveMonth(calMes,dias,'Día guardado')};
@@ -1002,7 +1008,7 @@ function confirmarNuevo(wrap){const cls=wrap.dataset.cls,kind=KIND[cls],n=wrap.q
     if(!ya){const usados=cfg.tipos.concat(cfg.formatos).map(x=>x.color.toUpperCase());const col=PALETA_CONT.find(c=>!usados.includes(c.toUpperCase()))||PALETA_CONT[usados.length%PALETA_CONT.length];
       cfg[kind].push({nombre:n,color:col});S.cont=cfg;w(db.doc('config/contenido').set(cfg).then(()=>toast(kind==='tipos'?'Tipo creado':'Formato creado')))}
     wrap.outerHTML=selectDe(cls,ya?ya.nombre:n)}
-  $('#bonoLegend').innerHTML=calMode==='juegos'?S.juegos.map(j=>`<span><span class="cchip" style="background:${colorJuego(j.nombre)}">${esc(j.nombre)}</span> ${esc(j.bono||'')}</span>`).join(''):contCfg().tipos.concat(contCfg().formatos).map(x=>chipC(x.nombre,x.color)).join('');
+  $('#bonoLegend').innerHTML=calMode==='push'?'':calMode==='juegos'?S.juegos.map(j=>`<span><span class="cchip" style="background:${colorJuego(j.nombre)}">${esc(j.nombre)}</span> ${esc(j.bono||'')}</span>`).join(''):contCfg().tipos.concat(contCfg().formatos).map(x=>chipC(x.nombre,x.color)).join('');
   renderCatalogo();renderCatCont()}
 $('#calForm').addEventListener('click',e=>{const b=e.target.closest('[data-newok],[data-newno]');if(!b)return;const wrap=b.closest('.cj-newwrap');
   if(b.dataset.newno){wrap.outerHTML=selectDe(wrap.dataset.cls,'');return}confirmarNuevo(wrap)});
@@ -1032,7 +1038,7 @@ $('#catForm').onsubmit=e=>{e.preventDefault();if(!need())return;const n=$('#catN
   if(S.juegos.some(j=>j.nombre.toLowerCase()===n.toLowerCase())){toast('Ese juego ya está en la lista');return}
   const usados=S.juegos.map(j=>colorJuego(j.nombre));const col=PALETA_JUEGOS.find(c=>!usados.includes(c))||PALETA_JUEGOS[S.juegos.length%PALETA_JUEGOS.length];const l=S.juegos.concat({nombre:n,bono:$('#catBono').value.trim(),color:col});S.juegos=l;$('#catNom').value='';$('#catBono').value='';renderCal();w(db.doc('config/juegos').set({lista:l}).then(()=>toast('Juego agregado')))};
 $('#calClear').onclick=e=>{if(!need()||!selDay||!armed(e.currentTarget))return;const dias=cloneMonth(calMes);const c=dias[String(selDay)]||{};
-  if(calMode==='juegos'){delete c.juego;delete c.horario;c.juegos=[];delete c.nota}else c.contenido=[];dias[String(selDay)]=c;e.currentTarget.blur();saveMonth(calMes,dias,'Día vaciado (deja de repetirse desde este mes)')};
+  if(calMode==='juegos'){delete c.juego;delete c.horario;c.juegos=[];delete c.nota}else if(calMode==='push')delete c.push;else c.contenido=[];dias[String(selDay)]=c;e.currentTarget.blur();saveMonth(calMes,dias,calMode==='push'?'Día vaciado':'Día vaciado (deja de repetirse desde este mes)')};
 
 function renderAll(){renderHoy();applySp();renderSpam();if(!$('#publiForm').contains(document.activeElement))loadPubli($('#gFecha').value);renderCaj();renderCal()}
 renderAll();
