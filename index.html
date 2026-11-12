@@ -613,7 +613,7 @@ function renderHoy(){
   $('#kMensH').textContent=S.calReady?(hp.length>3?`+${hp.length-3} más · `:'')+`${mh.filter(p=>p.ok).length}/${mh.length} del mes hechas`:'\u00a0';
   renderHist();
   const a=S.diario[ayer];$('#kSpamAyer').textContent=a&&(a.bm!=null||a.celus!=null||a.clientes!=null)?num(a.bm)+num(a.celus)+num(a.clientes):'—';
-  const c=dh[String(td.getDate())]||{};
+  const c=juegosRep(mesHoy,td.getDate()).c;
   const jh=juegosDe(c);$('#kJuego').textContent=S.calReady?(jh.map(j=>j.juego).filter(Boolean).join(' · ')||'Sin juego'):'–';
   $('#kJuegoH').textContent=[jh.map(j=>j.horario).filter(Boolean).join(' · '),c.nota?'📝 '+c.nota:''].filter(Boolean).join(' · ')||'\u00a0';
   if(ED.key){const i=document.querySelector('#tab-hoy li.editing .ed-text');const ae=document.activeElement;if(i&&!(ae&&ae.closest&&ae.closest('li.editing'))){i.focus();i.setSelectionRange(i.value.length,i.value.length)}}
@@ -944,6 +944,12 @@ function contenidoDe(mes,d){const own=((S.cal[mes]||{})[String(d)]||{}).contenid
   const prev=Object.keys(S.cal).filter(k=>/^\d{4}-\d\d$/.test(k)&&k<mes).sort().reverse();
   for(const k of prev){const c=((S.cal[k]||{})[String(d)]||{}).contenido;if(Array.isArray(c))return {items:c,desde:k}}
   return {items:[],desde:null}}
+// Juegos: también se repiten todos los meses (mismo número de día) hasta que se cambien a mano.
+function tieneJuegos(c){return !!c&&(Array.isArray(c.juegos)||!!c.juego||!!c.horario||!!c.nota)}
+function juegosRep(mes,d){const own=(S.cal[mes]||{})[String(d)];if(tieneJuegos(own))return {c:own,desde:null};
+  const prev=Object.keys(S.cal).filter(k=>/^\d{4}-\d\d$/.test(k)&&k<mes).sort().reverse();
+  for(const k of prev){const c=(S.cal[k]||{})[String(d)];if(tieneJuegos(c))return {c,desde:k}}
+  return {c:{},desde:null}}
 function renderCal(){
   setSeg('cal',calMode);document.querySelectorAll('#calForm [data-mode]').forEach(l=>l.hidden=l.dataset.mode!==calMode);
   const [y,m]=calMes.split('-').map(Number);$('#calTitle').textContent=mesLabel(calMes);
@@ -951,14 +957,14 @@ function renderCal(){
   let h=['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'].map(d=>`<div class="dh">${d}</div>`).join('');
   for(let i=0;i<off;i++)h+='<div class="d blank"></div>';
   for(let d=1;d<=nd;d++){const c=data[String(d)]||{};const isT=`${calMes}-${String(d).padStart(2,'0')}`===today;
-    const body=calMode==='juegos'?(()=>{const jj=juegosDe(c);return jj.slice(0,2).map(j=>(j.juego?`<span class="cchip" style="background:${colorJuego(j.juego)}" title="${esc(j.juego)}">${esc(j.juego)}</span>`:'')+(j.horario?`<span class="hr">${esc(j.horario)}</span>`:'')).join('')+(jj.length>2?`<span class="more">+${jj.length-2} más</span>`:'')+(c.nota?`<span class="nt" title="${esc(c.nota)}">📝 ${esc(c.nota)}</span>`:'')})():(()=>{const r=contenidoDe(calMes,d);if(!r.items.length)return '';const inner=celdaContenido(r.items);return r.desde?`<span class="rep-wrap" title="Se repite de ${mesLabel(r.desde)}" style="display:flex;flex-direction:column;gap:3px">${inner}</span>`:inner})();
+    const body=calMode==='juegos'?(()=>{const rj=juegosRep(calMes,d),cj=rj.c,jj=juegosDe(cj);const inner=jj.slice(0,2).map(j=>(j.juego?`<span class="cchip" style="background:${colorJuego(j.juego)}" title="${esc(j.juego)}">${esc(j.juego)}</span>`:'')+(j.horario?`<span class="hr">${esc(j.horario)}</span>`:'')).join('')+(jj.length>2?`<span class="more">+${jj.length-2} más</span>`:'')+(cj.nota?`<span class="nt" title="${esc(cj.nota)}">📝 ${esc(cj.nota)}</span>`:'');return rj.desde&&inner?`<span class="rep-wrap" title="Se repite de ${mesLabel(rj.desde)}" style="display:flex;flex-direction:column;gap:3px">${inner}</span>`:inner})():(()=>{const r=contenidoDe(calMes,d);if(!r.items.length)return '';const inner=celdaContenido(r.items);return r.desde?`<span class="rep-wrap" title="Se repite de ${mesLabel(r.desde)}" style="display:flex;flex-direction:column;gap:3px">${inner}</span>`:inner})();
     h+=`<button type="button" class="d ${isT?'today':''} ${selDay===d?'sel':''}" data-d="${d}"><span class="num">${d}</span>${body}</button>`}
   $('#cal').innerHTML=h;
   $('#bonoLegend').innerHTML=calMode==='juegos'?S.juegos.map(j=>`<span><span class="cchip" style="background:${colorJuego(j.nombre)}">${esc(j.nombre)}</span> ${esc(j.bono||'')}</span>`).join(''):contCfg().tipos.concat(contCfg().formatos).map(x=>chipC(x.nombre,x.color)).join('');
-  const rsel=selDay?contenidoDe(calMes,selDay):{desde:null};
-  $('#calHint').textContent=calMode==='juegos'?'Juego del día y horario.':(rsel.desde?`Se repite de ${mesLabel(rsel.desde)}. Si lo cambiás, rige desde este mes en adelante.`:'Lo que se publica en redes ese día. Se repite todos los meses hasta que lo cambies.');
+  const rsel=selDay?contenidoDe(calMes,selDay):{desde:null},rjs=selDay?juegosRep(calMes,selDay):{desde:null};
+  $('#calHint').textContent=calMode==='juegos'?(rjs.desde?`Se repite de ${mesLabel(rjs.desde)}. Si lo cambiás, rige desde este mes en adelante.`:'Juego del día y horario. Se repite todos los meses hasta que lo cambies.'):(rsel.desde?`Se repite de ${mesLabel(rsel.desde)}. Si lo cambiás, rige desde este mes en adelante.`:'Lo que se publica en redes ese día. Se repite todos los meses hasta que lo cambies.');
   $('#catBtn').hidden=calMode!=='juegos';$('#catCBtn').hidden=calMode!=='contenido';if(calMode==='juegos')$('#catCont').hidden=true;else $('#catJuegos').hidden=true;
-  if(!$('#calForm').contains(document.activeElement)&&selDay){const c=data[String(selDay)]||{};const jj=juegosDe(c);
+  if(!$('#calForm').contains(document.activeElement)&&selDay){const c=juegosRep(calMes,selDay).c;const jj=juegosDe(c);
     $('#cJuegos').innerHTML=(jj.length?jj:[{}]).map(filaJuego).join('');$('#cNota').value=c.nota||'';
     const pd=pubsDe(contenidoDe(calMes,selDay).items);
     $('#cPubs').innerHTML=(pd.pubs.length?pd.pubs:[{}]).map(filaPub).join('');$('#cNotaC').value=pd.nota}
@@ -972,7 +978,7 @@ $('#calPrev').onclick=()=>shiftCal(-1);$('#calNext').onclick=()=>shiftCal(1);
 $('#calForm').onsubmit=e=>{e.preventDefault();if(!need()||!selDay)return;
   const dias=cloneMonth(calMes);const c=dias[String(selDay)]=dias[String(selDay)]||{};
   if(calMode==='juegos'){const jj=[...document.querySelectorAll('#cJuegos .cj-row')].map(r=>({juego:(r.querySelector('.cj-j')||{value:''}).value,horario:r.querySelector('.cj-h').value.trim()})).filter(j=>j.juego||j.horario);
-    delete c.juego;delete c.horario;if(jj.length)c.juegos=jj;else delete c.juegos;const n=$('#cNota').value.trim();if(n)c.nota=n;else delete c.nota}
+    delete c.juego;delete c.horario;c.juegos=jj;const n=$('#cNota').value.trim();if(n)c.nota=n;else delete c.nota}
   else{const pubs=[...document.querySelectorAll('#cPubs .cj-row')].map(r=>({tipo:(r.querySelector('.cp-t')||{value:''}).value,hora:r.querySelector('.cp-h').value.trim(),formato:(r.querySelector('.cp-f')||{value:''}).value})).filter(x=>x.tipo||x.hora||x.formato);
     const n=$('#cNotaC').value.trim();c.contenido=pubs.concat(n?[{nota:n}]:[])}
   const a=document.activeElement;if(a&&a.blur)a.blur();saveMonth(calMes,dias,'Día guardado')};
@@ -1026,7 +1032,7 @@ $('#catForm').onsubmit=e=>{e.preventDefault();if(!need())return;const n=$('#catN
   if(S.juegos.some(j=>j.nombre.toLowerCase()===n.toLowerCase())){toast('Ese juego ya está en la lista');return}
   const usados=S.juegos.map(j=>colorJuego(j.nombre));const col=PALETA_JUEGOS.find(c=>!usados.includes(c))||PALETA_JUEGOS[S.juegos.length%PALETA_JUEGOS.length];const l=S.juegos.concat({nombre:n,bono:$('#catBono').value.trim(),color:col});S.juegos=l;$('#catNom').value='';$('#catBono').value='';renderCal();w(db.doc('config/juegos').set({lista:l}).then(()=>toast('Juego agregado')))};
 $('#calClear').onclick=e=>{if(!need()||!selDay||!armed(e.currentTarget))return;const dias=cloneMonth(calMes);const c=dias[String(selDay)]||{};
-  if(calMode==='juegos'){delete c.juego;delete c.horario;delete c.juegos;delete c.nota}else c.contenido=[];dias[String(selDay)]=c;e.currentTarget.blur();saveMonth(calMes,dias,calMode==='juegos'?'Día vaciado':'Día vaciado (deja de repetirse desde este mes)')};
+  if(calMode==='juegos'){delete c.juego;delete c.horario;c.juegos=[];delete c.nota}else c.contenido=[];dias[String(selDay)]=c;e.currentTarget.blur();saveMonth(calMes,dias,'Día vaciado (deja de repetirse desde este mes)')};
 
 function renderAll(){renderHoy();applySp();renderSpam();if(!$('#publiForm').contains(document.activeElement))loadPubli($('#gFecha').value);renderCaj();renderCal()}
 renderAll();
