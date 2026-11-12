@@ -110,19 +110,51 @@ svg text{fill:var(--muted);font-family:var(--mono);font-size:10px}
 .cal .num{font-family:var(--mono);font-weight:600;font-size:.8rem}
 .cal .g{font-size:.74rem;font-weight:700;color:var(--accent);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cal .hr{font-size:.7rem;color:var(--muted);font-family:var(--mono)}
+.cchip{display:inline-block;align-self:flex-start;max-width:100%;font-size:.66rem;font-weight:800;color:#141414;padding:1px 6px;border-radius:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.5}
+.cal .rep-wrap{opacity:.55}
+.cj-newwrap{display:flex;align-items:center;gap:2px;flex:1 1 50%;min-width:0}.cj-newwrap input{flex:1;min-width:0;width:0;border-color:var(--accent)}
+.cal .pub{display:flex;flex-direction:column;gap:2px;padding-bottom:3px}
+.cal .pub-l{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.cal .pub+.pub{border-top:1px solid var(--line);padding-top:3px}
+.legend .cchip{font-size:.72rem}
+.cat-color{width:30px;height:24px;padding:0;border:1px solid var(--line);border-radius:5px;background:none;cursor:pointer;flex:none}
+.cj-wrap{display:flex;flex-direction:column;gap:6px}
+.cj-lbl{font-size:.75rem;color:var(--muted);font-weight:600}
+.cj-row{display:flex;gap:6px;align-items:center}
+.cj-row select{flex:1 1 55%;min-width:0;width:0}.cj-row input{flex:1 1 45%;min-width:0;width:0}
+.cj-wrap>.btn{align-self:flex-start}
+.cal .nt{font-size:.68rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cal .more{font-size:.66rem;color:var(--accent)}
+.cal .ct.rep{color:var(--muted);font-style:italic}
 .cal .ct{font-size:.7rem;color:var(--fg);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.cal .ps{font-size:.7rem;color:var(--fg);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-left:2px solid var(--accent);padding-left:4px}
-.cal .cnt{margin-left:auto;font-size:.66rem;font-weight:700;color:var(--on-accent);background:var(--accent);border-radius:999px;padding:0 6px}
-.cal .d .top{display:flex;align-items:center;gap:4px}
-@media (max-width:640px){.cal .d{min-height:62px;padding:4px}.cal .hr,.cal .ct,.cal .ps{display:none}.cal .g{font-size:.64rem}}
+@media (max-width:640px){.cal .d{min-height:62px;padding:4px}.cal .hr,.cal .ct{display:none}.cal .g{font-size:.64rem}}
 .calgrid{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(260px,1fr);gap:14px;align-items:start}
 @media (max-width:860px){.calgrid{grid-template-columns:minmax(0,1fr)}}
+.pgrid{display:grid;grid-template-columns:minmax(300px,400px) minmax(0,1fr);gap:14px;align-items:start}@media (max-width:860px){.pgrid{grid-template-columns:minmax(0,1fr)}}
+.camp{border:1px solid var(--line);border-radius:8px;padding:10px;margin-top:10px;background:var(--surface)}
+.camp-h{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.camp-h input{flex:1;font-weight:700}
+.camp-h i{width:10px;height:10px;border-radius:2px;flex:none}
+.camp-r{font-size:.8rem;color:var(--muted);margin-top:6px}
+.pos{color:var(--accent)}.neg{color:var(--bad)}
+.pgrid tr.editing td,#spTable tr.editing td{background:var(--accent-soft)}
+.dotc{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px}
 .note{font-size:.8rem;color:var(--muted);margin-top:8px}
 .toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--accent);color:var(--on-accent);padding:8px 14px;border-radius:8px;font-weight:700;font-size:.85rem;opacity:0;transition:opacity .2s;pointer-events:none}
 .toast.show{opacity:1}
 @media (prefers-reduced-motion:reduce){.toast{transition:none}}
 [data-view][hidden],section[role=tabpanel][hidden],[data-mode][hidden]{display:none}
 .lock{font-size:.75rem;color:var(--muted);font-weight:500}
+.grip{cursor:grab;color:var(--muted);font-size:.9rem;padding:0 2px;user-select:none;flex:none;opacity:.5}
+li[draggable=true]:hover .grip{opacity:1}
+li.dragging{opacity:.35}
+li.drop-before{box-shadow:inset 0 2px 0 var(--accent)}
+li.drop-after{box-shadow:inset 0 -2px 0 var(--accent)}
+.list.drop-into{outline:2px dashed var(--accent);outline-offset:4px;border-radius:6px}
+.list li label .t small{display:block;font-size:.72rem;font-weight:600;color:var(--muted);margin-top:1px}
+.list li.overdue label .t small{color:var(--bad)}
+.list li.overdue{box-shadow:inset 3px 0 0 var(--bad);padding-left:8px}
+.list li.overdue input[type=checkbox]{outline:2px solid var(--bad);outline-offset:1px;border-radius:3px}
 .tile .mlist{display:flex;flex-direction:column;gap:2px;margin-top:4px}
 .tile .mlist span{font-weight:700;font-size:.92rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tile .mlist span.ok{color:var(--muted);text-decoration:line-through;font-weight:500}
@@ -149,8 +181,24 @@ body.locked .login{display:flex}
 .login .err{color:var(--bad);font-size:.85rem;min-height:1.2em}
 .admin-only{display:none!important}
 .perm-off{display:none!important}
+[hidden]{display:none!important}
+.bv-lock{display:flex;justify-content:center;padding-block:30px}
+.bv-lock form{width:min(420px,100%);display:flex;flex-direction:column;gap:12px;padding:26px 24px}
+.bv-icon{font-size:2rem;text-align:center}
+.bv-lbl{display:flex;flex-direction:column;gap:4px;font-size:.78rem;color:var(--muted);font-weight:600}
+.bv-lock .err{color:var(--bad);font-size:.85rem;min-height:1.1em;text-align:center}
+#bvSeg small{font-family:var(--mono);opacity:.7;margin-left:4px}
+.bv-cell{display:flex;align-items:center;gap:2px;white-space:nowrap}
+.bv-wide .bv-cell{white-space:normal;min-width:160px}
+.bv-secret{font-family:var(--mono);letter-spacing:.04em;margin-right:2px}
+.bv-empty{color:var(--muted)}
+.bv-in{display:flex;align-items:center;gap:2px}
+.bv-in input{padding:4px 6px;min-width:110px}
+td.bv-act{white-space:nowrap;text-align:right}
+.bv-import{background:var(--surface-2);border-radius:8px;padding:12px;margin-bottom:12px}
+#bvTable a{color:var(--accent)}
 /* Solo ver: sin botones de cambio y controles bloqueados */
-.perm-ro form.add,.perm-ro .ib[data-edit],.perm-ro .ib.del,.perm-ro .ctr button,.perm-ro #addFranja,.perm-ro [data-eqedit],.perm-ro button[type=submit],.perm-ro #fDel,.perm-ro #gDel,#calForm.perm-ro button{display:none!important}
+.perm-ro form.add,.perm-ro .ib[data-edit],.perm-ro .ib.del,.perm-ro .ctr button,.perm-ro #addFranja,.perm-ro #addCamp,.perm-ro [data-eqedit],.perm-ro button[type=submit],.perm-ro #fDel,.perm-ro #gDel,#calForm.perm-ro button{display:none!important}
 .perm-ro :is(input,select,textarea):not(#fHechos):not(#hMes){pointer-events:none}
 .perm-ro input[type=checkbox]:not(#fHechos){opacity:.55}
 .perm-ro td input[type=text]{background:transparent;border-color:transparent}
@@ -221,12 +269,13 @@ tr.det td{background:var(--surface-2);white-space:normal}
     <button role="tab" data-tab="panel" aria-selected="false" class="tw-off">Mi panel</button>
     <button role="tab" data-tab="reportes" aria-selected="false" class="tw-off">Reportes</button>
     <button role="tab" data-tab="usuarios" aria-selected="false" class="admin-only">Usuarios</button>
+    <button role="tab" data-tab="boveda" aria-selected="false" class="admin-only">Bóveda</button>
   </nav>
 
   <!-- HOY -->
   <section role="tabpanel" id="tab-hoy">
     <div class="tiles" data-perm="hoy_resumen">
-      <div class="tile"><div class="k">Diarias hechas</div><div class="v" id="kDiarias">–</div><div class="h">se reinicia cada día</div></div>
+      <div class="tile"><div class="k">Diarias hechas</div><div class="v" id="kDiarias">–</div><div class="h" id="kDiariasH">se reinicia cada día</div></div>
       <div class="tile"><div class="k">Mensuales de hoy</div><div class="mlist" id="kMens"><span>–</span></div><div class="h" id="kMensH" style="margin-top:4px">&nbsp;</div></div>
       <div class="tile"><div class="k">Spam ayer</div><div class="v" id="kSpamAyer">–</div><div class="h">mensajes enviados</div></div>
       <div class="tile"><div class="k">Juego de hoy</div><div class="v txt" id="kJuego">–</div><div class="h" id="kJuegoH">&nbsp;</div></div>
@@ -255,11 +304,14 @@ tr.det td{background:var(--surface-2);white-space:normal}
       <button type="button" data-v="spam" data-perm="spam_spam" aria-selected="true">Spam</button>
       <button type="button" data-v="publi" data-perm="spam_publi" aria-selected="false">Publicidad</button>
     </div>
-    <div class="toolbar"><label class="sub" for="spMes">Mes</label><input type="month" id="spMes"><span class="sp"></span><div class="legend" id="spLegend"></div></div>
+    <div class="toolbar"><label class="sub" for="spDesde">Desde</label><input type="date" id="spDesde"><label class="sub" for="spHasta">Hasta</label><input type="date" id="spHasta">
+      <div class="seg" id="spQuick" style="margin:0"><button type="button" data-q="hoy">Hoy</button><button type="button" data-q="7">7 días</button><button type="button" data-q="mes">Este mes</button><button type="button" data-q="ant">Mes anterior</button></div>
+      <label class="sub" for="spMes">Mes</label><input type="month" id="spMes"></div>
+    <div class="toolbar"><span class="sub" id="spRangoTxt"></span><span class="sp"></span><div class="legend" id="spLegend"></div></div>
 
     <div data-view="spam" data-perm="spam_spam">
       <div class="tiles">
-        <div class="tile"><div class="k">Mensajes del mes</div><div class="v" id="sTot">–</div><div class="h" id="sTotH"></div></div>
+        <div class="tile"><div class="k">Mensajes del período</div><div class="v" id="sTot">–</div><div class="h" id="sTotH"></div></div>
         <div class="tile"><div class="k">Promedio por día</div><div class="v" id="sProm">–</div><div class="h" id="sDias"></div></div>
         <div class="tile"><div class="k">Mejor día</div><div class="v" id="sMax">–</div><div class="h" id="sMaxH"></div></div>
         <div class="tile"><div class="k">Días sin envíos</div><div class="v" id="sCero">–</div><div class="h">cargados en 0</div></div>
@@ -278,33 +330,35 @@ tr.det td{background:var(--surface-2);white-space:normal}
             <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn pri" type="submit">Guardar</button><button class="btn" type="button" id="fDel">Borrar spam del día</button></div>
           </form>
         </div>
-        <div class="card"><h2>Registro de spam <small>tocá una fila para editarla</small></h2><div class="tablewrap"><table id="spTable"></table></div></div>
+        <div class="card"><h2>Registro de spam <small>✎ editar · × borrar</small></h2><div class="tablewrap"><table id="spTable"></table></div></div>
       </div>
     </div>
 
     <div data-view="publi" data-perm="spam_publi" hidden>
+      <div class="toolbar"><label class="sub" for="pOrigen">Publicista</label><select id="pOrigen"><option value="">Todos</option></select></div>
       <div class="tiles">
-        <div class="tile"><div class="k">Gasto del mes</div><div class="v" id="pGasto">–</div><div class="h" id="pFondeo"></div></div>
-        <div class="tile"><div class="k">Mensajes recibidos</div><div class="v" id="pMsj">–</div><div class="h" id="pCpm"></div></div>
+        <div class="tile"><div class="k">Invertido</div><div class="v" id="pGasto">–</div><div class="h" id="pFondeo"></div></div>
+        <div class="tile"><div class="k">Depositado</div><div class="v" id="pDep">–</div><div class="h" id="pRet"></div></div>
+        <div class="tile"><div class="k">Ganancia generada</div><div class="v" id="pGan">–</div><div class="h" id="pGanH"></div></div>
         <div class="tile"><div class="k">Convertidos</div><div class="v" id="pConv">–</div><div class="h" id="pTasa"></div></div>
-        <div class="tile"><div class="k">Costo por convertido</div><div class="v" id="pCpc">–</div><div class="h">gasto ÷ convertidos</div></div>
+        <div class="tile"><div class="k">Costo por convertido</div><div class="v" id="pCpc">–</div><div class="h" id="pCpm">gasto ÷ convertidos</div></div>
       </div>
       <div class="grid">
-        <div class="card" style="grid-column:1/-1"><h2>Gasto de publicidad por día</h2><div class="tablewrap" id="chartPubli"></div></div>
-        <div class="card"><h2>Cargar publicidad del día <small>Torres</small></h2>
+        <div class="card" style="grid-column:1/-1"><h2>Inversión por día <small>cada color es un publicista</small></h2><div class="tablewrap" id="chartPubli"></div></div>
+        <div class="pgrid" style="grid-column:1/-1">
+        <div class="card"><h2>Cargar campañas del día <small id="pDayBal"></small></h2>
           <form id="publiForm">
-            <div class="fields">
-              <label>Fecha<input type="date" id="gFecha" required></label>
-              <label>Gasto<input type="number" min="0" step="any" id="gGasto"></label>
-              <label>Fondeo<input type="number" min="0" step="any" id="gFondeo"></label>
-              <label>Mensajes<input type="number" min="0" id="gMsj"></label>
-              <label>Convertidos<input type="number" min="0" id="gConv"></label>
-            </div>
-            <label class="sub" style="display:flex;flex-direction:column;gap:3px;margin-top:8px">Nota<input type="text" id="gNota" placeholder="Ej.: cambio de creativo"></label>
-            <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn pri" type="submit">Guardar</button><button class="btn" type="button" id="gDel">Borrar publicidad del día</button></div>
+            <label class="sub" style="display:flex;flex-direction:column;gap:3px;max-width:200px">Fecha<input type="date" id="gFecha" required></label>
+            <div id="campList"></div>
+            <datalist id="dlOrigen"></datalist>
+            <button class="btn sm" type="button" id="addCamp" style="margin-top:10px">+ Agregar campaña</button>
+            <label class="sub" style="display:flex;flex-direction:column;gap:3px;margin-top:10px">Nota del día<input type="text" id="gNota" placeholder="Ej.: cambio de creativo"></label>
+            <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn pri" type="submit">Guardar día</button><button class="btn" type="button" id="gDel">Borrar publicidad del día</button></div>
           </form>
         </div>
-        <div class="card"><h2>Registro de publicidad <small>tocá una fila para editarla</small></h2><div class="tablewrap"><table id="pbTable"></table></div></div>
+        <div class="card"><h2>Registro por día <small>✎ editar · × borrar</small></h2><div class="tablewrap"><table id="pbTable"></table></div></div>
+        </div>
+        <div class="card" style="grid-column:1/-1"><h2>Resultado por publicista <small>período elegido</small></h2><div class="tablewrap"><table id="poTable"></table></div></div>
       </div>
     </div>
   </section>
@@ -339,20 +393,29 @@ tr.det td{background:var(--surface-2);white-space:normal}
     <div class="seg" data-seg="cal" role="tablist" aria-label="Tipo de calendario">
       <button type="button" data-v="juegos" data-perm="cal_juegos" aria-selected="true">Calendario de juegos</button>
       <button type="button" data-v="contenido" data-perm="cal_contenido" aria-selected="false">Calendario de contenido</button>
-      <button type="button" data-v="push" data-perm="cal_push" aria-selected="false">Calendario de push</button>
     </div>
     <div class="toolbar"><button class="btn" id="calPrev" type="button" aria-label="Mes anterior">‹</button><strong id="calTitle" style="min-width:140px;text-align:center;text-transform:capitalize"></strong><button class="btn" id="calNext" type="button" aria-label="Mes siguiente">›</button><span class="sp"></span>
-      <div class="legend" id="bonoLegend"></div></div>
+      <div class="legend" id="bonoLegend"></div><button type="button" class="btn sm" id="catBtn">Editar lista de juegos</button><button type="button" class="btn sm" id="catCBtn">Editar tipos y formatos</button></div>
+    <div class="card" id="catCont" hidden style="margin-bottom:14px"><h2>Tipos y formatos de contenido <small>cada uno con su color</small></h2>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+        <div><div class="cj-lbl" style="margin-bottom:6px">Tipos</div><ul class="list" id="catTipos"></ul>
+          <form class="add" data-catc="tipos"><input type="text" placeholder="Nuevo tipo (ej.: Sorteo)" aria-label="Nuevo tipo"><button class="btn pri">Agregar</button></form></div>
+        <div><div class="cj-lbl" style="margin-bottom:6px">Formatos</div><ul class="list" id="catFormatos"></ul>
+          <form class="add" data-catc="formatos"><input type="text" placeholder="Nuevo formato (ej.: Live)" aria-label="Nuevo formato"><button class="btn pri">Agregar</button></form></div>
+      </div></div>
+    <div class="card" id="catJuegos" hidden style="margin-bottom:14px"><h2>Lista de juegos <small>los que aparecen para elegir en cada día</small></h2>
+      <ul class="list" id="catList"></ul>
+      <form class="add" id="catForm"><input type="text" id="catNom" placeholder="Nombre del juego (ej.: Bingo)"><input type="text" id="catBono" placeholder="Bono (ej.: 100%)" style="flex:0 1 140px"><button class="btn pri">Agregar</button></form></div>
     <div class="calgrid">
       <div class="card"><div class="cal" id="cal"></div></div>
       <div class="card"><h2 id="dayTitle">Elegí un día</h2>
         <p class="note" id="calHint" style="margin-top:0"></p>
         <form id="calForm" hidden>
           <div class="fields" style="grid-template-columns:1fr">
-            <label data-mode="juegos">Juego<select id="cJuego"></select></label>
-            <label data-mode="juegos">Horario<input type="text" id="cHora" placeholder="Ej.: 18 a 20"></label>
-            <label data-mode="contenido">Publicaciones en redes (una por línea)<textarea id="cCont" rows="5" placeholder="Ej.: Reel promo Ruleta&#10;Historia IG ganadores"></textarea></label>
-            <label data-mode="push">Notificaciones push (una por línea, con la hora adelante)<textarea id="cPush" rows="5" placeholder="Ej.: 12:00 Bono de bienvenida 100%&#10;20:30 Arranca el torneo de Ruleta"></textarea></label>
+            <div data-mode="juegos" class="cj-wrap"><span class="cj-lbl">Juegos del día</span><div id="cJuegos"></div><button type="button" class="btn sm" id="cJuegoAdd">+ Agregar juego</button></div>
+            <label data-mode="juegos">Nota del día<textarea id="cNota" rows="3" placeholder="Ej.: Bono sorpresa, anunciar en el canal a las 18"></textarea></label>
+            <div data-mode="contenido" class="cj-wrap"><span class="cj-lbl">Publicaciones del día</span><div id="cPubs"></div><button type="button" class="btn sm" id="cPubAdd">+ Agregar publicación</button></div>
+            <label data-mode="contenido">Nota del día<textarea id="cNotaC" rows="2" placeholder="Ej.: usar foto de ganadores"></textarea></label>
           </div>
           <div style="display:flex;gap:8px;margin-top:10px"><button class="btn pri" type="submit">Guardar</button><button class="btn" type="button" id="calClear">Vaciar día</button></div>
         </form>
@@ -384,12 +447,57 @@ tr.det td{background:var(--surface-2);white-space:normal}
         <div class="note">La sección Usuarios siempre la ven los administradores, para que nunca te quedes sin acceso. CBU y sueldos además están protegidos en la base de datos.</div></div>
     </div>
   </section>
+
+  <!-- BÓVEDA (solo admin, cifrada) -->
+  <section role="tabpanel" id="tab-boveda" hidden>
+    <div id="bvLock" class="bv-lock">
+      <form id="bvLockForm" class="card">
+        <div class="bv-icon" aria-hidden="true">🔒</div>
+        <h2 id="bvLockTitle" style="justify-content:center">Bóveda bloqueada</h2>
+        <p class="note" id="bvLockText" style="text-align:center;margin-top:0"></p>
+        <label class="bv-lbl">Clave maestra<input type="password" id="bvPass" autocomplete="off" required></label>
+        <label class="bv-lbl" id="bvPass2Wrap" hidden>Repetí la clave maestra<input type="password" id="bvPass2" autocomplete="off"></label>
+        <button class="btn pri" id="bvLockBtn">Desbloquear</button>
+        <div class="err" id="bvLockErr" role="alert"></div>
+        <p class="note" style="text-align:center">Todo se cifra en tu navegador antes de guardarse. La clave maestra no se guarda en ningún lado.</p>
+      </form>
+    </div>
+    <div id="bvOpen" hidden>
+      <div class="toolbar">
+        <div class="seg" id="bvSeg" style="margin:0" role="tablist" aria-label="Sección de la bóveda">
+          <button type="button" data-v="gmails" aria-selected="true">Gmails <small></small></button>
+          <button type="button" data-v="cuentas" aria-selected="false">Cuentas y claves <small></small></button>
+          <button type="button" data-v="celus" aria-selected="false">Celulares y comunidades <small></small></button>
+        </div>
+        <span class="sp"></span>
+        <input type="text" id="bvSearch" placeholder="Buscar…" aria-label="Buscar" style="width:200px">
+        <button type="button" class="btn sm" id="bvChange">Cambiar clave maestra</button>
+        <button type="button" class="btn sm" id="bvLockNow">🔒 Bloquear</button>
+      </div>
+      <form id="bvChangeForm" class="card" hidden style="margin-bottom:14px">
+        <h2>Cambiar clave maestra</h2>
+        <div class="fields"><label>Nueva clave maestra<input type="password" id="bvNew1" autocomplete="off"></label><label>Repetila<input type="password" id="bvNew2" autocomplete="off"></label></div>
+        <div style="margin-top:10px"><button class="btn pri sm">Cambiar</button></div>
+      </form>
+      <div class="card">
+        <div class="toolbar" style="margin-bottom:10px"><button type="button" class="btn pri sm" id="bvAdd">+ Agregar</button><button type="button" class="btn sm" id="bvImpBtn">Importar desde Excel</button></div>
+        <div id="bvImport" hidden class="bv-import">
+          <p class="note" style="margin-top:0">En Excel seleccioná las filas (sin encabezado o con él), copialas con <b>Ctrl+C</b> y pegalas acá con <b>Ctrl+V</b>. El orden de las columnas tiene que ser:<br><b id="bvImpCols"></b></p>
+          <textarea id="bvImpText" rows="6" style="width:100%;font-family:var(--mono);font-size:.8rem" placeholder="Pegá acá las filas copiadas de Excel"></textarea>
+          <div style="display:flex;gap:10px;align-items:center;margin-top:8px"><button type="button" class="btn pri sm" id="bvImpOk">Importar</button><span class="note" id="bvImpInfo" style="margin:0"></span></div>
+        </div>
+        <div class="tablewrap"><table id="bvTable"></table></div>
+      </div>
+      <p class="note">Se bloquea sola después de 10 minutos sin uso. Solo los administradores ven esta pestaña.</p>
+    </div>
+  </section>
 </div>
 <div class="toast" id="toast" role="status"></div>
 
 <script src="config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
 <script src="auth.js"></script>
+<script src="boveda.js" defer></script>
 <script>
 (function(){
 const $=s=>document.querySelector(s);
@@ -429,13 +537,14 @@ document.querySelectorAll('nav.tabs button').forEach(b=>b.onclick=()=>setTab(b.d
 const S={checks:{},errAll:{},tareas:[],checksDia:{},checksSem:{},diario:{},errores:null,horarios:null,equipo:null,juegos:[],cal:{},ready:false,calReady:false};
 let db=null;
 let hMes=mesHoy,spMes=mesHoy,cjMes=mesHoy,calMes=mesHoy,mensMes=mesHoy,selDay=null;
-let spView=store.get('spView')==='publi'?'publi':'spam', calMode=['contenido','push'].includes(store.get('calMode'))?store.get('calMode'):'juegos';
-$('#hMes').value=hMes;$('#spMes').value=spMes;$('#cjMes').value=cjMes;$('#fFecha').value=today;$('#gFecha').value=today;
+let spView=store.get('spView')==='publi'?'publi':'spam', calMode=store.get('calMode')==='contenido'?'contenido':'juegos';
+let spDesde=mesHoy+'-01',spHasta=`${mesHoy}-${String(daysIn(mesHoy)).padStart(2,'0')}`;
+$('#hMes').value=hMes;$('#spMes').value=spMes;$('#spDesde').value=spDesde;$('#spHasta').value=spHasta;$('#cjMes').value=cjMes;$('#fFecha').value=today;$('#gFecha').value=today;
 
 function need(){if(!db){toast('Sin conexión a los datos');return false}return true}
 async function w(p){try{await p}catch(e){toast(e&&e.code==='invalid_argument'?'No tenés permiso para editar':'No se pudo guardar');console.error(e)}}
 function cloneMonth(mes){return JSON.parse(JSON.stringify(S.cal[mes]||{}))}
-function clean(dias){Object.keys(dias).forEach(k=>{const c=dias[k];if(c.pendientes&&!c.pendientes.length)delete c.pendientes;if(c.contenido&&!c.contenido.length)delete c.contenido;if(c.push&&!c.push.length)delete c.push;if(!Object.keys(c).length)delete dias[k]})}
+function clean(dias){Object.keys(dias).forEach(k=>{const c=dias[k];if(c.pendientes&&!c.pendientes.length)delete c.pendientes;if(!Object.keys(c).length)delete dias[k]})}
 function saveMonth(mes,dias,msg){clean(dias);S.cal[mes]=dias;renderHoy();renderCal();w(db.doc('calendario/'+mes).set({dias}).then(()=>msg&&toast(msg)))}
 
 /* Segmentos (sub-pestañas) */
@@ -443,7 +552,7 @@ function setSeg(name,v){document.querySelectorAll(`.seg[data-seg="${name}"] butt
 document.querySelectorAll('.seg[data-seg="sp"] button').forEach(b=>b.onclick=()=>{spView=b.dataset.v;store.set('spView',spView);applySp()});
 document.querySelectorAll('.seg[data-seg="cal"] button').forEach(b=>b.onclick=()=>{calMode=b.dataset.v;store.set('calMode',calMode);renderCal()});
 function applySp(){setSeg('sp',spView);document.querySelectorAll('#tab-spam [data-view]').forEach(v=>v.hidden=v.dataset.view!==spView);
-  $('#spLegend').innerHTML=spView==='spam'?'<span><i style="background:var(--s1)"></i>BM</span><span><i style="background:var(--s2)"></i>Celus</span><span><i style="background:var(--s3)"></i>Clientes</span>':'<span><i style="background:var(--s1)"></i>Gasto</span>'}
+  $('#spLegend').innerHTML=spView==='spam'?'<span><i style="background:var(--s1)"></i>BM</span><span><i style="background:var(--s2)"></i>Celus</span><span><i style="background:var(--s3)"></i>Clientes</span>':'';if(spView==='publi'&&typeof renderSpam==='function')renderSpam()}
 
 /* ---------- HOY ---------- */
 // Edición en línea: ED.key = 't:<id>' (tarea) o 'm:<dia>:<i>' (mensual)
@@ -454,12 +563,25 @@ window.TC.RESP=RESP;
 $('#respGrid').innerHTML=RESP.map(r=>`<div class="card"><h2><span><span class="resp-tag"></span>${r.d}</span><small id="cnt-${r.id}"></small></h2><ul class="list" id="lp-${r.id}"></ul>
   <form class="add" data-tipo="pendiente" data-resp="${r.k}"><input type="text" id="add-${r.id}" placeholder="Nueva tarea"><button class="btn pri">Agregar</button></form></div>`).join('');
 
+const creadoDe=t=>t.creado?fmt(new Date(t.creado)):(t.orden&&t.orden>1e12)?fmt(new Date(t.orden)):'0000';
+const fechaCorta=k=>`${Number(k.slice(8))}/${Number(k.slice(5,7))}`;
+function ultimaVez(id){let u=null;for(const k in S.checks){if(k<today&&/^\d{4}-\d\d-\d\d$/.test(k)&&S.checks[k][id]&&(!u||k>u))u=k}return u}
+// Diaria atrasada: hoy no está hecha y ayer tampoco se hizo (y ya existía ayer)
+function atrasada(t){return !S.checksDia[t.id]&&creadoDe(t)<=ayer&&!(S.checks[ayer]||{})[t.id]}
 function actions(key){return `<button type="button" class="ib" data-edit="${key}" aria-label="Editar" title="Editar">✎</button><button type="button" class="ib del" data-del="${key}" aria-label="Borrar" title="Borrar">×</button>`}
 function editRow(key,text,extra){const v=ED.draft.text??text;
   return `<li class="editing" data-key="${key}">${extra||''}<input type="text" class="ed-text" value="${esc(v)}" aria-label="Texto"><button type="button" class="btn pri sm" data-save="${key}">Guardar</button><button type="button" class="btn sm" data-cancel="1">Cancelar</button></li>`}
-function taskLi(t,checked,cls){const key='t:'+t.id;
-  if(ED.key===key){const extra=t.tipo==='pendiente'?`<select class="ed-resp" aria-label="Responsable">${RESP.map(r=>`<option value="${esc(r.k)}" ${r.k===(ED.draft.resp??(t.resp||'General'))?'selected':''}>${esc(r.p)}</option>`).join('')}</select>`:t.tipo==='semanal'?`<select class="ed-dia" aria-label="Día">${SEMANA.map(d=>`<option ${d===(ED.draft.dia??t.dia)?'selected':''}>${d}</option>`).join('')}</select>`:'';return editRow(key,t.texto,extra)}
-  return `<li class="${checked?'done':''} ${cls||''}" data-key="${key}"><label><input type="checkbox" data-chk="${key}" ${checked?'checked':''}><span class="t">${esc(t.texto)}</span></label>${t.tipo==='semanal'&&t.dia?`<span class="chip ${t.dia===diaHoy?'acc':''}">${esc(t.dia.slice(0,3))}</span>`:''}${actions(key)}</li>`}
+function taskLi(t,checked,cls){const key='t:'+t.id,mov=t.tipo==='diaria'||t.tipo==='pendiente';
+  if(ED.key===key){let extra='';
+    if(t.tipo==='semanal')extra=`<select class="ed-dia" aria-label="Día">${SEMANA.map(d=>`<option ${d===(ED.draft.dia??t.dia)?'selected':''}>${d}</option>`).join('')}</select>`;
+    if(t.tipo==='pendiente')extra=`<select class="ed-resp" aria-label="Mover a">${RESP.map(r=>`<option value="${r.k}" ${r.k===(ED.draft.resp??(t.resp||'General'))?'selected':''}>${r.d.replace('Tareas de ','').replace('Tareas ','')}</option>`).join('')}</select>`;
+    if(mov)extra+=`<button type="button" class="ib" data-up="${key}" title="Subir" aria-label="Subir">↑</button><button type="button" class="ib" data-down="${key}" title="Bajar" aria-label="Bajar">↓</button>`;
+    return editRow(key,t.texto,extra)}
+  let sub='';
+  if(t.tipo==='diaria'&&!checked&&S.ready){const u=ultimaVez(t.id);
+    if(atrasada(t)){cls=(cls||'')+' overdue';sub=`<small>No se hizo ayer · última vez: ${u?fechaCorta(u):'nunca'}</small>`}
+    else if(u)sub=`<small>Última vez: ${u===ayer?'ayer':fechaCorta(u)}</small>`}
+  return `<li class="${checked?'done':''} ${cls||''}" data-key="${key}" ${mov?'draggable="true"':''}>${mov?'<span class="grip" title="Arrastrar para ordenar">⠿</span>':''}<label><input type="checkbox" data-chk="${key}" ${checked?'checked':''}><span class="t">${esc(t.texto)}${sub}</span></label>${t.tipo==='semanal'&&t.dia?`<span class="chip ${t.dia===diaHoy?'acc':''}">${esc(t.dia.slice(0,3))}</span>`:''}${actions(key)}</li>`}
 function setList(sel,html){const el=$(sel);const a=document.activeElement;if(a&&el.contains(a)&&a.closest('li.editing'))return;el.innerHTML=html}
 
 function renderHoy(){
@@ -484,6 +606,7 @@ function renderHoy(){
   // tiles
   const done=di.filter(t=>S.checksDia[t.id]).length;
   $('#kDiarias').textContent=S.ready?`${done}/${di.length}`:'–';
+  const atr=S.ready?di.filter(atrasada).length:0;const kh=$('#kDiariasH');kh.textContent=atr?`${atr} atrasada${atr>1?'s':''} de ayer`:'se reinicia cada día';kh.style.color=atr?'var(--bad)':'';
   const mh=[];const dh=S.cal[mesHoy]||{};Object.values(dh).forEach(c=>(c.pendientes||[]).forEach(p=>mh.push(p)));
   const hp=(dh[String(td.getDate())]||{}).pendientes||[];
   $('#kMens').innerHTML=!S.calReady?'<span>–</span>':hp.length?hp.slice(0,3).map(p=>`<span class="${p.ok?'ok':''}" title="${esc(p.t)}">${esc(p.t)}</span>`).join(''):'<span style="color:var(--muted);font-weight:500">Nada para hoy</span>';
@@ -491,7 +614,8 @@ function renderHoy(){
   renderHist();
   const a=S.diario[ayer];$('#kSpamAyer').textContent=a&&(a.bm!=null||a.celus!=null||a.clientes!=null)?num(a.bm)+num(a.celus)+num(a.clientes):'—';
   const c=dh[String(td.getDate())]||{};
-  $('#kJuego').textContent=S.calReady?(c.juego||'Sin juego'):'–';$('#kJuegoH').textContent=c.horario||' ';
+  const jh=juegosDe(c);$('#kJuego').textContent=S.calReady?(jh.map(j=>j.juego).filter(Boolean).join(' · ')||'Sin juego'):'–';
+  $('#kJuegoH').textContent=[jh.map(j=>j.horario).filter(Boolean).join(' · '),c.nota?'📝 '+c.nota:''].filter(Boolean).join(' · ')||'\u00a0';
   if(ED.key){const i=document.querySelector('#tab-hoy li.editing .ed-text');const ae=document.activeElement;if(i&&!(ae&&ae.closest&&ae.closest('li.editing'))){i.focus();i.setSelectionRange(i.value.length,i.value.length)}}
 }
 $('#fHechos').onchange=renderHoy;
@@ -516,12 +640,13 @@ hoy.addEventListener('click',e=>{
   if(b.dataset.edit){ED.key=b.dataset.edit;ED.draft={};renderHoy();return}
   if(b.dataset.cancel){stopEdit();renderHoy();return}
   if(b.dataset.save){saveEdit(b.closest('li'));return}
+  if(b.dataset.up||b.dataset.down){const t=findTask(b.dataset.up||b.dataset.down);if(t&&need())moverPaso(t,b.dataset.up?-1:1);return}
   if(b.dataset.del){if(!need()||!armed(b))return;delItem(b.dataset.del)}
 });
 hoy.addEventListener('keydown',e=>{const li=e.target.closest&&e.target.closest('li.editing');if(!li)return;
   if(e.key==='Enter'){e.preventDefault();saveEdit(li)}if(e.key==='Escape'){stopEdit();renderHoy()}});
 function saveEdit(li){if(!need())return;const key=li.dataset.key,txt=li.querySelector('.ed-text').value.trim();if(!txt){toast('Escribí un texto');return}
-  if(key.startsWith('t:')){const t=findTask(key);if(!t){stopEdit();renderHoy();return}const d={texto:txt};const dia=li.querySelector('.ed-dia');if(dia)d.dia=dia.value;const rs=li.querySelector('.ed-resp');if(rs)d.resp=rs.value;Object.assign(t,d);
+  if(key.startsWith('t:')){const t=findTask(key);if(!t){stopEdit();renderHoy();return}const d={texto:txt};const dia=li.querySelector('.ed-dia');if(dia)d.dia=dia.value;const rs=li.querySelector('.ed-resp');if(rs&&rs.value!==(t.resp||'General')){d.resp=rs.value;d.orden=finDeLista('pendiente',rs.value);Object.assign(d,conCreado(t))}Object.assign(t,d);
     stopEdit();renderHoy();w(db.doc('tareas/'+t.id).update(d).then(()=>toast('Tarea actualizada')));return}
   const [,d,i]=key.split(':');const nd=Math.min(daysIn(mensMes),Math.max(1,parseInt(li.querySelector('.ed-day').value,10)||Number(d)));
   const dias=cloneMonth(mensMes);if(!dias[d]||!dias[d].pendientes){stopEdit();renderHoy();return}
@@ -532,7 +657,7 @@ function delItem(key){
   const [,d,i]=key.split(':');const dias=cloneMonth(mensMes);if(!dias[d]||!dias[d].pendientes)return;dias[d].pendientes.splice(Number(i),1);saveMonth(mensMes,dias,'Tarea borrada')}
 document.querySelectorAll('form.add[data-tipo]').forEach(f=>f.addEventListener('submit',e=>{
   e.preventDefault();if(!need())return;const inp=f.querySelector('input[type=text]');const txt=inp.value.trim();if(!txt)return;
-  const tipo=f.dataset.tipo,d={texto:txt,tipo,orden:Date.now()};
+  const tipo=f.dataset.tipo,d={texto:txt,tipo,orden:Date.now(),creado:Date.now()};
   if(tipo==='semanal')d.dia=$('#addSemanalDia').value;
   if(tipo==='pendiente'){d.resp=f.dataset.resp||'General';d.hecha=false}
   inp.value='';w(db.collection('tareas').add(d));
@@ -542,13 +667,43 @@ $('#addMensForm').onsubmit=e=>{e.preventDefault();if(!need())return;const t=$('#
   const dias=cloneMonth(mensMes);const c=dias[String(d)]=dias[String(d)]||{};c.pendientes=(c.pendientes||[]).concat({t,ok:false});
   $('#addMens').value='';$('#addMensDia').value='';saveMonth(mensMes,dias,'Tarea agregada')};
 
+/* ---------- ORDENAR Y MOVER TAREAS ---------- */
+// Lista ordenada de un tipo (y responsable, si es pendiente)
+function listaDe(tipo,resp){return S.tareas.filter(x=>x.tipo===tipo&&(tipo!=='pendiente'||(x.resp||'General')===resp)).sort((a,b)=>(a.orden??0)-(b.orden??0))}
+function finDeLista(tipo,resp){const l=listaDe(tipo,resp);return l.length?(l[l.length-1].orden??0)+1:Date.now()}
+// Si el orden viejo guardaba la fecha de creación, la conservamos antes de cambiarlo
+function conCreado(t){return (!t.creado&&t.orden&&t.orden>1e12)?{creado:t.orden}:{}}
+function ordenEntre(prev,next){const a=prev?prev.orden??0:null,b=next?next.orden??0:null;
+  if(a==null&&b==null)return Date.now();if(a==null)return b-1;if(b==null)return a+1;return (a+b)/2}
+function guardarPos(t,cambios,msg){Object.assign(cambios,conCreado(t));Object.assign(t,cambios);renderHoy();w(db.doc('tareas/'+t.id).update(cambios).then(()=>msg&&toast(msg)))}
+function moverPaso(t,dir){const l=listaDe(t.tipo,t.resp||'General');const i=l.indexOf(t),j=i+dir;if(j<0||j>=l.length)return;
+  const rest=l.filter(x=>x!==t);const pos=dir<0?j:j;guardarPos(t,{orden:ordenEntre(rest[pos-1],rest[pos])})}
+function moverA(t,tipo,resp,beforeId){const rest=listaDe(tipo,resp).filter(x=>x!==t);let idx=beforeId?rest.findIndex(x=>x.id===beforeId):rest.length;if(idx<0)idx=rest.length;
+  const c={orden:ordenEntre(rest[idx-1],rest[idx])};if(tipo==='pendiente'&&resp!==(t.resp||'General'))c.resp=resp;
+  guardarPos(t,c,c.resp?`Movida a ${resp}`:null)}
+// Arrastrar y soltar (diarias dentro de su lista; pendientes también entre responsables)
+let DRAG=null;
+function infoLista(ul){if(!ul)return null;if(ul.id==='lDiaria')return {tipo:'diaria'};const r=RESP.find(r=>'lp-'+r.id===ul.id);return r?{tipo:'pendiente',resp:r.k}:null}
+function limpiarDrop(){document.querySelectorAll('.drop-before,.drop-after').forEach(x=>x.classList.remove('drop-before','drop-after'));document.querySelectorAll('.drop-into').forEach(x=>x.classList.remove('drop-into'))}
+hoy.addEventListener('dragstart',e=>{const li=e.target.closest&&e.target.closest('li[draggable=true]');if(!li)return;const t=findTask(li.dataset.key);if(!t)return;
+  DRAG=t;li.classList.add('dragging');e.dataTransfer.effectAllowed='move';try{e.dataTransfer.setData('text/plain',t.id)}catch(_){}});
+hoy.addEventListener('dragend',()=>{DRAG=null;limpiarDrop();document.querySelectorAll('li.dragging').forEach(x=>x.classList.remove('dragging'))});
+function destino(e){const ul=e.target.closest&&e.target.closest('ul.list');const inf=infoLista(ul);if(!DRAG||!inf||inf.tipo!==DRAG.tipo)return null;
+  const items=[...ul.querySelectorAll('li[data-key]:not(.dragging)')];let before=null;
+  for(const li of items){const r=li.getBoundingClientRect();if(e.clientY<r.top+r.height/2){before=li;break}}
+  return {ul,inf,before}}
+hoy.addEventListener('dragover',e=>{const d=destino(e);if(!d)return;e.preventDefault();e.dataTransfer.dropEffect='move';limpiarDrop();
+  if(d.before)d.before.classList.add('drop-before');else{const last=[...d.ul.querySelectorAll('li[data-key]:not(.dragging)')].pop();if(last)last.classList.add('drop-after');else d.ul.classList.add('drop-into')}});
+hoy.addEventListener('drop',e=>{const d=destino(e);if(!d)return;e.preventDefault();limpiarDrop();const t=DRAG;DRAG=null;if(!need())return;
+  const beforeT=d.before?findTask(d.before.dataset.key):null;moverA(t,d.inf.tipo,d.inf.resp,beforeT&&beforeT.id)});
+
 /* ---------- HISTÓRICO ---------- */
 function renderHist(){
   const nd=daysIn(hMes),[hy,hm]=hMes.split('-').map(Number);
   const dates=[];for(let d=1;d<=nd;d++)dates.push(`${hMes}-${String(d).padStart(2,'0')}`);
   const past=k=>k<today; // cuenta hasta ayer
   const pctCls=p=>p<50?'lo':p<80?'mid':'hi';
-  const created=t=>(t.orden&&t.orden>1e12)?fmt(new Date(t.orden)):'0000';
+  const created=creadoDe;
   const by=tp=>S.tareas.filter(x=>x.tipo===tp);
   const rows=[];let tot={d:[0,0],w:[0,0],m:[0,0]};
   // diarias
@@ -579,21 +734,71 @@ function renderHist(){
 $('#hMes').onchange=()=>{hMes=$('#hMes').value||mesHoy;subCal(hMes);renderHist()};
 
 /* ---------- SPAM / PUBLICIDAD ---------- */
-function barChart(mes,series,fmtV){
-  const m=Number(mes.split('-')[1]),nd=daysIn(mes),data=[];
-  for(let d=1;d<=nd;d++){const r=S.diario[`${mes}-${String(d).padStart(2,'0')}`]||{};data.push({d,v:series.map(s=>num(r[s.f]))})}
+function rangoDias(a,b){const out=[];for(let x=parse(a),e=parse(b);x<=e&&out.length<400;x.setDate(x.getDate()+1))out.push(fmt(x));return out}
+function barChart(_,series,fmtV){
+  const ks=rangoDias(spDesde,spHasta),nd=ks.length,data=[];
+  ks.forEach((k,i)=>{const r=S.diario[k]||{};data.push({k,d:Number(k.slice(8)),m:Number(k.slice(5,7)),v:series.map(s=>s.get?s.get(r):num(r[s.f]))})});
   const max=Math.max(1,...data.map(x=>x.v.reduce((a,b)=>a+b,0)));const step=Math.pow(10,Math.floor(Math.log10(max)));const nice=Math.ceil(max/step)*step;
   const W=Math.max(620,nd*24),H=200,pl=52,pb=20,pt=8,bw=(W-pl-6)/nd,yS=v=>H-pb-(v/nice)*(H-pb-pt);
   let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" style="min-width:${W}px;max-width:100%;display:block" role="img">`;
   for(let i=0;i<=4;i++){const v=nice*i/4,yy=yS(v);s+=`<line x1="${pl}" x2="${W}" y1="${yy}" y2="${yy}" stroke="var(--line)" stroke-width="1"/><text x="${pl-4}" y="${yy+3}" text-anchor="end">${fmtV(v)}</text>`}
   data.forEach((x,i)=>{const cx=pl+i*bw+bw*.15,ww=bw*.7;let base=0;
-    x.v.forEach((v,j)=>{if(v>0){const y1=yS(base+v),y0=yS(base);s+=`<rect x="${cx}" y="${y1}" width="${ww}" height="${Math.max(0,y0-y1)}" fill="${series[j].c}" rx="1.5"><title>${x.d}/${m} · ${series[j].l}: ${fmtV(v)}</title></rect>`;base+=v}});
-    if(x.d===1||x.d%5===0||x.d===nd)s+=`<text x="${cx+ww/2}" y="${H-6}" text-anchor="middle">${x.d}</text>`});
+    x.v.forEach((v,j)=>{if(v>0){const y1=yS(base+v),y0=yS(base);s+=`<rect x="${cx}" y="${y1}" width="${ww}" height="${Math.max(0,y0-y1)}" fill="${series[j].c}" rx="1.5"><title>${x.d}/${x.m} · ${series[j].l}: ${fmtV(v)}</title></rect>`;base+=v}});
+    if(nd<=16||i===0||x.d===1||x.d%5===0||i===nd-1)s+=`<text x="${cx+ww/2}" y="${H-6}" text-anchor="middle">${x.d===1||i===0?x.d+'/'+x.m:x.d}</text>`});
   return s+'</svg>'}
 const SPF=['bm','celus','clientes'],PBF=['gasto','fondeo','mensajes','convertidos'];
+/* ---------- PUBLICIDAD: varias campañas por día ---------- */
+// diario/<fecha>.campanas = [{origen,gasto,fondeo,mensajes,convertidos,depositado,retiros}]
+const CF=[['gasto','Gasto'],['fondeo','Fondeo'],['mensajes','Mensajes'],['convertidos','Convertidos'],['depositado','Depositado'],['retiros','Retiros']];
+const PAL=['#ffc928','#5ec8f0','#ff8a5c','#9b8cff','#7ddc8a','#ff6fae','#e8e8e8','#c49a5a','#4fd1c5','#f2e05a'];
+const smoney=v=>(v<0?'−$':'$')+Math.abs(Math.round(v)).toLocaleString('es-AR');
+const ganCls=v=>v>0?'pos':v<0?'neg':'';
+function camps(r){if(!r)return[];if(Array.isArray(r.campanas))return r.campanas;return has(r,PBF)?[{origen:'Torres',gasto:r.gasto,fondeo:r.fondeo,mensajes:r.mensajes,convertidos:r.convertidos}]:[]}
+function origenes(){const o=new Set();Object.values(S.diario).forEach(r=>camps(r).forEach(c=>c.origen&&o.add(c.origen)));return [...o].sort((a,b)=>a.localeCompare(b))}
+function colorDe(o){const l=origenes();const i=l.indexOf(o);return PAL[(i<0?l.length:i)%PAL.length]}
+function sumC(list){const t={gasto:0,fondeo:0,mensajes:0,convertidos:0,depositado:0,retiros:0};list.forEach(c=>CF.forEach(([f])=>t[f]+=num(c[f])));t.gan=t.depositado-t.retiros-t.gasto;return t}
+function renderPubli(rows){
+  const all=origenes(),sel=$('#pOrigen'),cur=sel.value;
+  sel.innerHTML='<option value="">Todos</option>'+all.map(o=>`<option ${o===cur?'selected':''}>${esc(o)}</option>`).join('');
+  $('#dlOrigen').innerHTML=all.map(o=>`<option>${esc(o)}</option>`).join('');
+  const f=sel.value,pick=r=>camps(r).filter(c=>!f||c.origen===f);
+  const days=rows.map(([k,r])=>[k,pick(r)]).filter(([,c])=>c.length);
+  const T=sumC(days.flatMap(([,c])=>c));const any=days.length>0;
+  $('#pGasto').textContent=any?money(T.gasto):'—';$('#pFondeo').textContent=T.fondeo?`Fondeo ${money(T.fondeo)}`:'sin fondeo cargado';
+  $('#pDep').textContent=any?money(T.depositado):'—';$('#pRet').textContent=any?`Retiros ${money(T.retiros)}`:'';
+  const g=$('#pGan');g.textContent=any?smoney(T.gan):'—';g.className='v '+(any?ganCls(T.gan):'');
+  $('#pGanH').textContent='depositado − retiros − gasto'+(any&&T.gasto?` · ${T.gan>=0?'+':''}${Math.round(T.gan/T.gasto*100)}%`:'');
+  $('#pConv').textContent=any?T.convertidos:'—';$('#pTasa').textContent=T.mensajes?`${(T.convertidos/T.mensajes*100).toFixed(1)}% de ${T.mensajes} mensajes`:'';
+  $('#pCpc').textContent=T.gasto&&T.convertidos?money(T.gasto/T.convertidos):'—';
+  // gráfico apilado por publicista
+  const enMes=[...new Set(rows.flatMap(([,r])=>pick(r).map(c=>c.origen||'Sin nombre')))].sort((a,b)=>a.localeCompare(b));
+  const series=enMes.map(o=>({c:colorDe(o),l:o,get:r=>camps(r).filter(c=>(c.origen||'Sin nombre')===o).reduce((a,c)=>a+num(c.gasto),0)}));
+  $('#chartPubli').innerHTML=barChart(spMes,series.length?series:[{c:'var(--s1)',l:'Gasto',get:()=>0}],v=>v>=1000?'$'+Math.round(v/1000)+'k':'$'+Math.round(v));
+  if(spView==='publi')$('#spLegend').innerHTML=enMes.map(o=>`<span><i style="background:${colorDe(o)}"></i>${esc(o)}</span>`).join('');
+  // registro por día
+  $('#pbTable').innerHTML=`<thead><tr><th>Fecha</th><th>Publicistas</th><th>Gasto</th><th>Depositado</th><th>Retiros</th><th>Ganancia</th><th>Conv.</th><th>$/conv.</th><th></th></tr></thead><tbody>`+
+    (any?days.slice().reverse().map(([k,c])=>{const t=sumC(c);return `<tr class="click ${$('#gFecha').value===k?'editing':''}" data-k="${k}"><td>${k.slice(8)}/${k.slice(5,7)}</td><td>${c.map(x=>`<span class="dotc" title="${esc(x.origen)}" style="background:${colorDe(x.origen)}"></span>`).join('')}</td><td class="n">${money(t.gasto)}</td><td class="n">${money(t.depositado)}</td><td class="n">${money(t.retiros)}</td><td class="n"><b class="${ganCls(t.gan)}">${smoney(t.gan)}</b></td><td class="n">${t.convertidos}</td><td class="n">${t.gasto&&t.convertidos?money(t.gasto/t.convertidos):''}</td><td><button type="button" class="ib" data-pbed="${k}" title="Editar" aria-label="Editar">✎</button><button type="button" class="ib del" data-pbdel="${k}" title="Borrar" aria-label="Borrar">×</button></td></tr>`}).join(''):`<tr><td colspan="9" class="empty">${S.ready?'Sin publicidad cargada en este período.':'Cargando…'}</td></tr>`)+'</tbody>';
+  // resultado por publicista
+  const by={};rows.forEach(([k,r])=>camps(r).forEach(c=>{const o=c.origen||'Sin nombre';(by[o]=by[o]||{d:new Set(),l:[]}).l.push(c);by[o].d.add(k)}));
+  const po=Object.keys(by).map(o=>({o,n:by[o].d.size,t:sumC(by[o].l)})).sort((a,b)=>b.t.gan-a.t.gan);const TT=sumC(Object.values(by).flatMap(x=>x.l));
+  const prow=(name,n,t,b)=>`<tr${b?' style="font-weight:800"':''}><td>${name}</td><td class="n">${n}</td><td class="n">${money(t.gasto)}</td><td class="n">${money(t.fondeo)}</td><td class="n">${t.mensajes}</td><td class="n">${t.convertidos}</td><td class="n">${money(t.depositado)}</td><td class="n">${money(t.retiros)}</td><td class="n"><b class="${ganCls(t.gan)}">${smoney(t.gan)}</b></td><td class="n">${t.gasto&&t.convertidos?money(t.gasto/t.convertidos):'—'}</td></tr>`;
+  $('#poTable').innerHTML=po.length?`<thead><tr><th>Publicista</th><th>Días</th><th>Gasto</th><th>Fondeo</th><th>Mensajes</th><th>Conv.</th><th>Depositado</th><th>Retiros</th><th>Ganancia</th><th>$/conv.</th></tr></thead><tbody>`+po.map(x=>prow(`<span class="dotc" style="background:${colorDe(x.o)}"></span><b>${esc(x.o)}</b>`,x.n,x.t)).join('')+(po.length>1?prow('Total','',TT,1):'')+'</tbody>':`<tbody><tr><td class="empty">${S.ready?'Sin campañas este mes.':'Cargando…'}</td></tr></tbody>`;
+}
+function campRow(c,i){c=c||{};return `<div class="camp" data-i="${i}"><div class="camp-h"><i style="background:${c.origen?colorDe(c.origen):'var(--line)'}"></i><input type="text" class="c-origen" list="dlOrigen" placeholder="Publicista / campaña" value="${esc(c.origen||'')}" aria-label="Publicista"><button type="button" class="ib del" data-rmcamp="${i}" aria-label="Quitar campaña" title="Quitar campaña">×</button></div>
+  <div class="fields">${CF.map(([f,l])=>`<label>${l}<input type="number" min="0" step="any" class="c-${f}" value="${c[f]??''}"></label>`).join('')}</div><div class="camp-r"></div></div>`}
+function readCamps(){return [...document.querySelectorAll('#campList .camp')].map(el=>{const o={origen:el.querySelector('.c-origen').value.trim()};CF.forEach(([f])=>{const v=el.querySelector('.c-'+f).value.trim();if(v!=='')o[f]=Number(v)});return o})}
+function calcPubli(){let tot=[];document.querySelectorAll('#campList .camp').forEach((el,i)=>{const c=readCamps()[i];tot.push(c);const t=sumC([c]);el.querySelector('.camp-r').innerHTML=`Ganancia de esta campaña: <b class="${ganCls(t.gan)}">${smoney(t.gan)}</b>`});
+  const t=sumC(tot);$('#pDayBal').innerHTML=tot.length?`Balance del día: <b class="${ganCls(t.gan)}">${smoney(t.gan)}</b>`:''}
+function loadPubli(k){const r=S.diario[k]||{};$('#gFecha').value=k;const c=camps(r);$('#campList').innerHTML=(c.length?c:[{}]).map(campRow).join('');$('#gNota').value=r.notaPubli??'';calcPubli()}
+function savePubli(k,list,msg){if(!need()||!k)return;const base=Object.assign({},S.diario[k]||{});PBF.forEach(f=>delete base[f]);
+  if(list.length)base.campanas=list;else delete base.campanas;const n=$('#gNota').value.trim();if(n&&list.length)base.notaPubli=n;else delete base.notaPubli;
+  S.diario[k]=base;renderSpam();w((Object.keys(base).length?db.doc('diario/'+k).set(base):db.doc('diario/'+k).delete()).then(()=>toast(msg)))}
+
 const has=(r,fs)=>fs.some(f=>r[f]!=null&&r[f]!=='');
 function renderSpam(){
-  const rows=Object.entries(S.diario).filter(([k])=>k.startsWith(spMes)).sort((a,b)=>a[0]<b[0]?-1:1);
+  const rows=Object.entries(S.diario).filter(([k])=>k>=spDesde&&k<=spHasta).sort((a,b)=>a[0]<b[0]?-1:1);
+  const fd=k=>`${k.slice(8)}/${k.slice(5,7)}`;$('#spRangoTxt').textContent=spDesde===spHasta?`Mostrando el ${fd(spDesde)}`:`Mostrando del ${fd(spDesde)} al ${fd(spHasta)}`;
+  document.querySelectorAll('#spQuick button').forEach(b=>b.setAttribute('aria-selected',b.dataset.q===quickSel()));
   const sp=rows.filter(([,r])=>has(r,SPF)),pb=rows.filter(([,r])=>has(r,PBF));
   let tot=0,bm=0,ce=0,cl=0,dias=0,cero=0,best=null;
   sp.forEach(([k,r])=>{const s=num(r.bm)+num(r.celus)+num(r.clientes);if(s>0)dias++;else cero++;tot+=s;bm+=num(r.bm);ce+=num(r.celus);cl+=num(r.clientes);if(!best||s>best[1])best=[k,s]});
@@ -602,33 +807,41 @@ function renderSpam(){
   $('#sMax').textContent=best&&best[1]?best[1]:'—';$('#sMaxH').textContent=best&&best[1]?`el ${best[0].slice(8)}/${best[0].slice(5,7)}`:'';
   $('#sCero').textContent=sp.length?cero:'—';
   $('#chartSpam').innerHTML=barChart(spMes,[{f:'bm',c:'var(--s1)',l:'BM'},{f:'celus',c:'var(--s2)',l:'Celus'},{f:'clientes',c:'var(--s3)',l:'Clientes'}],v=>Math.round(v));
-  $('#spTable').innerHTML=`<thead><tr><th>Fecha</th><th>BM</th><th>Celus</th><th>Clientes</th><th>Total</th><th>Nota</th></tr></thead><tbody>`+
-    (sp.length?sp.slice().reverse().map(([k,r])=>`<tr class="click" data-k="${k}"><td>${k.slice(8)}/${k.slice(5,7)}</td><td class="n">${num(r.bm)}</td><td class="n">${num(r.celus)}</td><td class="n">${num(r.clientes)}</td><td class="n"><b>${num(r.bm)+num(r.celus)+num(r.clientes)}</b></td><td style="white-space:normal;min-width:140px">${esc(r.nota)}</td></tr>`).join(''):`<tr><td colspan="6" class="empty">${S.ready?'Sin spam cargado este mes.':'Cargando…'}</td></tr>`)+'</tbody>';
-  let g=0,fo=0,ms=0,cv=0;pb.forEach(([,r])=>{g+=num(r.gasto);fo+=num(r.fondeo);ms+=num(r.mensajes);cv+=num(r.convertidos)});
-  $('#pGasto').textContent=g?money(g):'—';$('#pFondeo').textContent=fo?`Fondeo ${money(fo)}`:'sin fondeo cargado';
-  $('#pMsj').textContent=pb.length?ms:'—';$('#pCpm').textContent=g&&ms?`${money(g/ms)} por mensaje`:'';
-  $('#pConv').textContent=pb.length?cv:'—';$('#pTasa').textContent=ms?`${(cv/ms*100).toFixed(1)}% de los mensajes`:'';
-  $('#pCpc').textContent=g&&cv?money(g/cv):'—';
-  $('#chartPubli').innerHTML=barChart(spMes,[{f:'gasto',c:'var(--s1)',l:'Gasto'}],v=>v>=1000?'$'+Math.round(v/1000)+'k':'$'+Math.round(v));
-  $('#pbTable').innerHTML=`<thead><tr><th>Fecha</th><th>Gasto</th><th>Fondeo</th><th>Mensajes</th><th>Conv.</th><th>$/conv.</th><th>Nota</th></tr></thead><tbody>`+
-    (pb.length?pb.slice().reverse().map(([k,r])=>`<tr class="click" data-k="${k}"><td>${k.slice(8)}/${k.slice(5,7)}</td><td class="n">${r.gasto!=null?money(r.gasto):''}</td><td class="n">${r.fondeo!=null?money(r.fondeo):''}</td><td class="n">${r.mensajes??''}</td><td class="n">${r.convertidos??''}</td><td class="n">${num(r.gasto)&&num(r.convertidos)?money(r.gasto/r.convertidos):''}</td><td style="white-space:normal;min-width:140px">${esc(r.notaPubli)}</td></tr>`).join(''):`<tr><td colspan="7" class="empty">${S.ready?'Sin publicidad cargada este mes.':'Cargando…'}</td></tr>`)+'</tbody>';
+  $('#spTable').innerHTML=`<thead><tr><th>Fecha</th><th>BM</th><th>Celus</th><th>Clientes</th><th>Total</th><th>Nota</th><th></th></tr></thead><tbody>`+
+    (sp.length?sp.slice().reverse().map(([k,r])=>`<tr class="click ${$('#fFecha').value===k?'editing':''}" data-k="${k}"><td>${k.slice(8)}/${k.slice(5,7)}</td><td class="n">${num(r.bm)}</td><td class="n">${num(r.celus)}</td><td class="n">${num(r.clientes)}</td><td class="n"><b>${num(r.bm)+num(r.celus)+num(r.clientes)}</b></td><td style="white-space:normal;min-width:140px">${esc(r.nota)}</td><td><button type="button" class="ib" data-sped="${k}" title="Editar" aria-label="Editar">✎</button><button type="button" class="ib del" data-spdel="${k}" title="Borrar" aria-label="Borrar">×</button></td></tr>`).join(''):`<tr><td colspan="7" class="empty">${S.ready?'Sin spam cargado en este período.':'Cargando…'}</td></tr>`)+'</tbody>';
+  renderPubli(rows);
 }
 const SPAM_FORM=[['#fBm','bm'],['#fCelus','celus'],['#fClientes','clientes'],['#fNota','nota','t']];
-const PUBLI_FORM=[['#gGasto','gasto'],['#gFondeo','fondeo'],['#gMsj','mensajes'],['#gConv','convertidos'],['#gNota','notaPubli','t']];
 function fill(map,dateSel,k){const r=S.diario[k]||{};$(dateSel).value=k;map.forEach(([s,f])=>$(s).value=r[f]??'')}
 function saveDay(map,k,msg){if(!need()||!k)return;const base=Object.assign({},S.diario[k]||{});
   map.forEach(([s,f,t])=>{const v=$(s).value.trim();if(v==='')delete base[f];else base[f]=t?v:Number(v)});
   S.diario[k]=base;renderSpam();
   w((Object.keys(base).length?db.doc('diario/'+k).set(base):db.doc('diario/'+k).delete()).then(()=>toast(msg)))}
 $('#fFecha').onchange=()=>fill(SPAM_FORM,'#fFecha',$('#fFecha').value);
-$('#gFecha').onchange=()=>fill(PUBLI_FORM,'#gFecha',$('#gFecha').value);
-$('#spTable').onclick=e=>{const tr=e.target.closest('tr[data-k]');if(tr){fill(SPAM_FORM,'#fFecha',tr.dataset.k);$('#fBm').focus()}};
-$('#pbTable').onclick=e=>{const tr=e.target.closest('tr[data-k]');if(tr){fill(PUBLI_FORM,'#gFecha',tr.dataset.k);$('#gGasto').focus()}};
-$('#spMes').onchange=()=>{spMes=$('#spMes').value||mesHoy;renderSpam()};
+$('#gFecha').onchange=()=>loadPubli($('#gFecha').value);
+$('#pOrigen').onchange=renderSpam;
+$('#addCamp').onclick=()=>{const l=readCamps();l.push({});$('#campList').innerHTML=l.map(campRow).join('');calcPubli();const x=[...document.querySelectorAll('#campList .c-origen')].pop();x&&x.focus()};
+$('#campList').addEventListener('input',e=>{calcPubli();if(e.target.classList.contains('c-origen')){const i=e.target.parentNode.querySelector('i');i.style.background=e.target.value.trim()?colorDe(e.target.value.trim()):'var(--line)'}});
+$('#campList').addEventListener('click',e=>{const b=e.target.closest('[data-rmcamp]');if(!b)return;const l=readCamps();l.splice(Number(b.dataset.rmcamp),1);$('#campList').innerHTML=(l.length?l:[{}]).map(campRow).join('');calcPubli()});
+$('#spTable').onclick=e=>{const d=e.target.closest('[data-spdel]');if(d){if(!need()||!armed(d))return;const k=d.dataset.spdel;fill(SPAM_FORM,'#fFecha',k);SPAM_FORM.forEach(([s])=>$(s).value='');saveDay(SPAM_FORM,k,'Spam borrado');return}
+  const tr=e.target.closest('tr[data-k]');if(tr){fill(SPAM_FORM,'#fFecha',tr.dataset.k);renderSpam();$('#spamForm').scrollIntoView({behavior:'smooth',block:'center'});$('#fBm').focus({preventScroll:true})}};
+$('#pbTable').onclick=e=>{const d=e.target.closest('[data-pbdel]');if(d){if(!need()||!armed(d))return;const k=d.dataset.pbdel;$('#gFecha').value=k;$('#gNota').value='';savePubli(k,[],'Publicidad borrada');loadPubli(k);return}
+  const tr=e.target.closest('tr[data-k]');if(tr){loadPubli(tr.dataset.k);renderSpam();$('#publiForm').scrollIntoView({behavior:'smooth',block:'start'})}};
+function setRango(a,b){if(a>b)[a,b]=[b,a];spDesde=a;spHasta=b;$('#spDesde').value=a;$('#spHasta').value=b;$('#spMes').value=a.slice(0,7)===b.slice(0,7)?a.slice(0,7):'';renderSpam()}
+function finMes(m){return `${m}-${String(daysIn(m)).padStart(2,'0')}`}
+function quickSel(){if(spDesde===today&&spHasta===today)return 'hoy';const s7=new Date(td);s7.setDate(td.getDate()-6);if(spDesde===fmt(s7)&&spHasta===today)return '7';
+  if(spDesde===mesHoy+'-01'&&spHasta===finMes(mesHoy))return 'mes';const ma=addMonth(mesHoy,-1);if(spDesde===ma+'-01'&&spHasta===finMes(ma))return 'ant';return ''}
+$('#spMes').onchange=()=>{const m=$('#spMes').value;if(m)setRango(m+'-01',finMes(m))};
+$('#spDesde').onchange=()=>{const v=$('#spDesde').value;if(v)setRango(v,spHasta)};
+$('#spHasta').onchange=()=>{const v=$('#spHasta').value;if(v)setRango(spDesde,v)};
+$('#spQuick').onclick=e=>{const b=e.target.closest('[data-q]');if(!b)return;const q=b.dataset.q;
+  if(q==='hoy')setRango(today,today);else if(q==='7'){const s7=new Date(td);s7.setDate(td.getDate()-6);setRango(fmt(s7),today)}
+  else if(q==='mes')setRango(mesHoy+'-01',finMes(mesHoy));else{const ma=addMonth(mesHoy,-1);setRango(ma+'-01',finMes(ma))}};
 $('#spamForm').onsubmit=e=>{e.preventDefault();saveDay(SPAM_FORM,$('#fFecha').value,'Spam guardado')};
-$('#publiForm').onsubmit=e=>{e.preventDefault();saveDay(PUBLI_FORM,$('#gFecha').value,'Publicidad guardada')};
+$('#publiForm').onsubmit=e=>{e.preventDefault();const l=readCamps().filter(c=>c.origen||CF.some(([f])=>c[f]!=null));
+  if(l.some(c=>!c.origen)){toast('Poné el publicista de cada campaña');return}const a=document.activeElement;if(a&&a.blur)a.blur();savePubli($('#gFecha').value,l,'Publicidad guardada')};
 $('#fDel').onclick=e=>{if(!need()||!armed(e.currentTarget))return;SPAM_FORM.forEach(([s])=>$(s).value='');saveDay(SPAM_FORM,$('#fFecha').value,'Spam borrado')};
-$('#gDel').onclick=e=>{if(!need()||!armed(e.currentTarget))return;PUBLI_FORM.forEach(([s])=>$(s).value='');saveDay(PUBLI_FORM,$('#gFecha').value,'Publicidad borrada')};
+$('#gDel').onclick=e=>{if(!need()||!armed(e.currentTarget))return;$('#gNota').value='';savePubli($('#gFecha').value,[],'Publicidad borrada');loadPubli($('#gFecha').value)};
 
 /* ---------- CAJEROS ---------- */
 const CATS=[['tarde','Llegó tarde',1],['ausente','Ausente',1],['faltante','Faltante',1],['malContestado','Msj mal contestado',1],['errorSistema','Error de sistema',1],['noContestado','Msj no contestado',1],['noReportado','Error no reportado',1],['publiMal','Publi mal contestada',1],['publiSin','Publi sin contestar',1],['excelente','Excelente atención',-1]];
@@ -693,6 +906,44 @@ $('#addEqForm').onsubmit=e=>{e.preventDefault();if(!need())return;const n=$('#eq
   ['#eqCaja','#eqNom','#eqCbu','#eqSueldo'].forEach(s=>$(s).value='');saveEq(l,'Persona agregada')};
 
 /* ---------- CALENDARIO (juegos / contenido de redes) ---------- */
+// Colores del contenido (como el Excel "Contenido del mes")
+// Listas por defecto (se pueden editar en "Editar tipos y formatos"); todos los colores son distintos
+const CONT_DEF={tipos:[{nombre:'Interactivo',color:'#F9CB9C'},{nombre:'Oferta/venta',color:'#9FC5E8'},{nombre:'Informativo',color:'#C9A9E6'},{nombre:'Memes',color:'#F4B6B6'},{nombre:'Prueba social',color:'#B6D7A8'},{nombre:'Identidad',color:'#FFE599'},{nombre:'Comunidad',color:'#D9D9D9'}],
+  formatos:[{nombre:'Reel',color:'#80DEEA'},{nombre:'Post',color:'#FFAB91'},{nombre:'Carrusel',color:'#CCFF90'},{nombre:'Historia',color:'#F48FB1'},{nombre:'Video',color:'#B39DDB'}]};
+const PALETA_CONT=['#F9CB9C','#9FC5E8','#C9A9E6','#F4B6B6','#B6D7A8','#FFE599','#D9D9D9','#80DEEA','#FFAB91','#CCFF90','#F48FB1','#B39DDB','#FF5252','#536DFE','#FFD740','#1DE9B6','#E040FB','#BCAAA4','#FF6E40','#69F0AE'];
+const contCfg=()=>S.cont||CONT_DEF;
+const TIPOS_CONT={map:f=>contCfg().tipos.map(x=>[x.nombre,x.color]).map(f),concat:a=>contCfg().tipos.map(x=>[x.nombre,x.color]).concat(a)};
+const FORMATOS={map:f=>contCfg().formatos.map(x=>[x.nombre,x.color]).map(f),slice:()=>contCfg().formatos.map(x=>[x.nombre,x.color])};
+const norm=t=>String(t||'').trim().toLowerCase();
+const colorTipo=t=>(contCfg().tipos.find(x=>norm(x.nombre)===norm(t))||{}).color;
+const colorFormato=t=>(contCfg().formatos.find(x=>norm(x.nombre)===norm(t))||{}).color;
+const esHora=t=>/^\d{1,2}[:.]\d{2}$/.test(String(t||'').trim());
+// Separa las líneas guardadas en tipo / hora / formato / notas
+function partesContenido(items){const r={tipo:'',hora:'',formato:'',notas:[]};(items||[]).forEach(x=>{
+  if(!r.tipo&&colorTipo(x))r.tipo=x;else if(!r.hora&&esHora(x))r.hora=x;else if(!r.formato&&colorFormato(x))r.formato=x;else r.notas.push(x)});return r}
+function chipContenido(x){const c=colorTipo(x)||colorFormato(x);if(c)return `<span class="cchip" style="background:${c}" title="${esc(x)}">${esc(x)}</span>`;
+  if(esHora(x))return `<span class="hr">${esc(x)}</span>`;return `<span class="ct" title="${esc(x)}">${esc(x)}</span>`}
+// Publicaciones: contenido = [{tipo,hora,formato}, …, {nota}] (también lee el formato viejo de líneas de texto)
+function pubsDe(items){items=items||[];const pubs=[],notas=[];
+  if(items.some(x=>x&&typeof x==='object')){items.forEach(x=>{if(!x||typeof x!=='object')return;if(x.nota)notas.push(x.nota);else pubs.push({tipo:x.tipo||'',hora:x.hora||'',formato:x.formato||''})})}
+  else if(items.length){const pc=partesContenido(items);if(pc.tipo||pc.hora||pc.formato)pubs.push({tipo:pc.tipo,hora:pc.hora,formato:pc.formato});notas.push(...pc.notas)}
+  return {pubs,nota:notas.join(' · ')}}
+function filaPub(pb){pb=pb||{};return `<div class="cj-row"><select class="cp-t" aria-label="Tipo">${opciones(contCfg().tipos,pb.tipo,'— tipo —')}</select><input type="text" class="cp-h" value="${esc(pb.hora||'')}" placeholder="Hora" aria-label="Hora" style="flex:0 0 64px;width:64px"><select class="cp-f" aria-label="Formato">${opciones(contCfg().formatos,pb.formato,'— formato —')}</select><button type="button" class="ib del" data-cpdel="1" aria-label="Quitar publicación" title="Quitar">×</button></div>`}
+const chipC=(n,c)=>n?`<span class="cchip" style="background:${c||'#BDBDBD'}" title="${esc(n)}">${esc(n)}</span>`:'';
+function celdaContenido(items){const {pubs,nota}=pubsDe(items);
+  return pubs.slice(0,2).map(pb=>`<span class="pub">${chipC(pb.tipo,colorTipo(pb.tipo))}<span class="pub-l">${pb.hora?`<span class="hr">${esc(pb.hora)}</span>`:''}${chipC(pb.formato,colorFormato(pb.formato))}</span></span>`).join('')+(pubs.length>2?`<span class="more">+${pubs.length-2} más</span>`:'')+(nota?`<span class="nt" title="${esc(nota)}">📝 ${esc(nota)}</span>`:'')}
+// Colores de los juegos: cada juego el suyo (se puede cambiar en "Editar lista de juegos")
+const PALETA_JUEGOS=['#F9CB9C','#9FC5E8','#C9A9E6','#F4B6B6','#B6D7A8','#FFE599','#A2E1DB','#D9D9D9','#FF8A80','#8C9EFF','#CCFF90','#F48FB1','#80DEEA','#E6B8AF'];
+function colorJuego(n){const l=S.juegos||[];const i=l.findIndex(j=>norm(j.nombre)===norm(n));if(i>=0)return l[i].color||PALETA_JUEGOS[i%PALETA_JUEGOS.length];
+  let h=0;for(const ch of norm(n))h=(h*31+ch.charCodeAt(0))>>>0;return PALETA_JUEGOS[h%PALETA_JUEGOS.length]}
+function opciones(lista,val,vacio){const has=lista.some(x=>norm(x.nombre)===norm(val));return `<option value="">${vacio}</option>`+lista.map(x=>`<option ${norm(x.nombre)===norm(val)?'selected':''}>${esc(x.nombre)}</option>`).join('')+(val&&!has?`<option selected>${esc(val)}</option>`:'')+'<option value="__nuevo__">+ Crear nuevo…</option>'}
+function juegosDe(c){c=c||{};if(Array.isArray(c.juegos))return c.juegos;return (c.juego||c.horario)?[{juego:c.juego||'',horario:c.horario||''}]:[]}
+function filaJuego(j){return `<div class="cj-row"><select class="cj-j" aria-label="Juego">${opciones(S.juegos||[],j.juego,'— elegir juego —')}</select><input type="text" class="cj-h" value="${esc(j.horario||'')}" placeholder="Horario (ej.: 18 a 20)" aria-label="Horario"><button type="button" class="ib del" data-cjdel="1" aria-label="Quitar juego" title="Quitar">×</button></div>`}
+// Contenido de redes: se repite todos los meses (mismo número de día) hasta que se cambie a mano.
+function contenidoDe(mes,d){const own=((S.cal[mes]||{})[String(d)]||{}).contenido;if(Array.isArray(own))return {items:own,desde:null};
+  const prev=Object.keys(S.cal).filter(k=>/^\d{4}-\d\d$/.test(k)&&k<mes).sort().reverse();
+  for(const k of prev){const c=((S.cal[k]||{})[String(d)]||{}).contenido;if(Array.isArray(c))return {items:c,desde:k}}
+  return {items:[],desde:null}}
 function renderCal(){
   setSeg('cal',calMode);document.querySelectorAll('#calForm [data-mode]').forEach(l=>l.hidden=l.dataset.mode!==calMode);
   const [y,m]=calMes.split('-').map(Number);$('#calTitle').textContent=mesLabel(calMes);
@@ -700,18 +951,18 @@ function renderCal(){
   let h=['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'].map(d=>`<div class="dh">${d}</div>`).join('');
   for(let i=0;i<off;i++)h+='<div class="d blank"></div>';
   for(let d=1;d<=nd;d++){const c=data[String(d)]||{};const isT=`${calMes}-${String(d).padStart(2,'0')}`===today;
-    const body=calMode==='juegos'?(c.juego?`<span class="g">${esc(c.juego)}</span>`:'')+(c.horario?`<span class="hr">${esc(c.horario)}</span>`:''):calMode==='push'?(c.push||[]).map(x=>`<span class="ps" title="${esc(x)}">${esc(x)}</span>`).join(''):(c.contenido||[]).map(x=>`<span class="ct" title="${esc(x)}">${esc(x)}</span>`).join('');
-    const cnt=calMode==='push'&&(c.push||[]).length?`<span class="cnt" title="Push del día">${c.push.length}</span>`:'';
-    h+=`<button type="button" class="d ${isT?'today':''} ${selDay===d?'sel':''}" data-d="${d}"><span class="top"><span class="num">${d}</span>${cnt}</span>${body}</button>`}
+    const body=calMode==='juegos'?(()=>{const jj=juegosDe(c);return jj.slice(0,2).map(j=>(j.juego?`<span class="cchip" style="background:${colorJuego(j.juego)}" title="${esc(j.juego)}">${esc(j.juego)}</span>`:'')+(j.horario?`<span class="hr">${esc(j.horario)}</span>`:'')).join('')+(jj.length>2?`<span class="more">+${jj.length-2} más</span>`:'')+(c.nota?`<span class="nt" title="${esc(c.nota)}">📝 ${esc(c.nota)}</span>`:'')})():(()=>{const r=contenidoDe(calMes,d);if(!r.items.length)return '';const inner=celdaContenido(r.items);return r.desde?`<span class="rep-wrap" title="Se repite de ${mesLabel(r.desde)}" style="display:flex;flex-direction:column;gap:3px">${inner}</span>`:inner})();
+    h+=`<button type="button" class="d ${isT?'today':''} ${selDay===d?'sel':''}" data-d="${d}"><span class="num">${d}</span>${body}</button>`}
   $('#cal').innerHTML=h;
-  $('#bonoLegend').innerHTML=calMode==='juegos'?S.juegos.map(j=>`<span><b style="color:var(--fg)">${esc(j.nombre)}</b> ${esc(j.bono||'')}</span>`).join(''):'';
-  $('#calHint').textContent=calMode==='juegos'?'Juego del día y horario.':calMode==='push'?'Notificaciones push que salen ese día, con su hora.':'Lo que se publica en redes ese día.';
-  const sel=$('#cJuego');
-  if(!$('#calForm').contains(document.activeElement)){
-    sel.innerHTML='<option value="">— sin juego —</option>'+S.juegos.map(j=>`<option>${esc(j.nombre)}</option>`).join('');
-    if(selDay){const c=data[String(selDay)]||{};
-      if(c.juego&&!S.juegos.some(j=>j.nombre===c.juego))sel.insertAdjacentHTML('beforeend',`<option>${esc(c.juego)}</option>`);
-      sel.value=c.juego||'';$('#cHora').value=c.horario||'';$('#cCont').value=(c.contenido||[]).join('\n');$('#cPush').value=(c.push||[]).join('\n')}}
+  $('#bonoLegend').innerHTML=calMode==='juegos'?S.juegos.map(j=>`<span><span class="cchip" style="background:${colorJuego(j.nombre)}">${esc(j.nombre)}</span> ${esc(j.bono||'')}</span>`).join(''):contCfg().tipos.concat(contCfg().formatos).map(x=>chipC(x.nombre,x.color)).join('');
+  const rsel=selDay?contenidoDe(calMes,selDay):{desde:null};
+  $('#calHint').textContent=calMode==='juegos'?'Juego del día y horario.':(rsel.desde?`Se repite de ${mesLabel(rsel.desde)}. Si lo cambiás, rige desde este mes en adelante.`:'Lo que se publica en redes ese día. Se repite todos los meses hasta que lo cambies.');
+  $('#catBtn').hidden=calMode!=='juegos';$('#catCBtn').hidden=calMode!=='contenido';if(calMode==='juegos')$('#catCont').hidden=true;else $('#catJuegos').hidden=true;
+  if(!$('#calForm').contains(document.activeElement)&&selDay){const c=data[String(selDay)]||{};const jj=juegosDe(c);
+    $('#cJuegos').innerHTML=(jj.length?jj:[{}]).map(filaJuego).join('');$('#cNota').value=c.nota||'';
+    const pd=pubsDe(contenidoDe(calMes,selDay).items);
+    $('#cPubs').innerHTML=(pd.pubs.length?pd.pubs:[{}]).map(filaPub).join('');$('#cNotaC').value=pd.nota}
+  renderCatalogo();renderCatCont();
   if(selDay){$('#dayTitle').textContent=`${selDay} de ${MESES[m-1]}`;$('#calForm').hidden=false}
   else{$('#dayTitle').textContent='Elegí un día';$('#calForm').hidden=true}
 }
@@ -720,21 +971,72 @@ function shiftCal(n){calMes=addMonth(calMes,n);selDay=null;subCal(calMes);render
 $('#calPrev').onclick=()=>shiftCal(-1);$('#calNext').onclick=()=>shiftCal(1);
 $('#calForm').onsubmit=e=>{e.preventDefault();if(!need()||!selDay)return;
   const dias=cloneMonth(calMes);const c=dias[String(selDay)]=dias[String(selDay)]||{};
-  if(calMode==='juegos'){const j=$('#cJuego').value,h=$('#cHora').value.trim();if(j)c.juego=j;else delete c.juego;if(h)c.horario=h;else delete c.horario}
-  else if(calMode==='push'){c.push=$('#cPush').value.split('\n').map(s=>s.trim()).filter(Boolean)}
-  else{c.contenido=$('#cCont').value.split('\n').map(s=>s.trim()).filter(Boolean)}
+  if(calMode==='juegos'){const jj=[...document.querySelectorAll('#cJuegos .cj-row')].map(r=>({juego:(r.querySelector('.cj-j')||{value:''}).value,horario:r.querySelector('.cj-h').value.trim()})).filter(j=>j.juego||j.horario);
+    delete c.juego;delete c.horario;if(jj.length)c.juegos=jj;else delete c.juegos;const n=$('#cNota').value.trim();if(n)c.nota=n;else delete c.nota}
+  else{const pubs=[...document.querySelectorAll('#cPubs .cj-row')].map(r=>({tipo:(r.querySelector('.cp-t')||{value:''}).value,hora:r.querySelector('.cp-h').value.trim(),formato:(r.querySelector('.cp-f')||{value:''}).value})).filter(x=>x.tipo||x.hora||x.formato);
+    const n=$('#cNotaC').value.trim();c.contenido=pubs.concat(n?[{nota:n}]:[])}
   const a=document.activeElement;if(a&&a.blur)a.blur();saveMonth(calMes,dias,'Día guardado')};
+// "+ Crear nuevo…" en un menú: se escribe el nombre ahí mismo, se agrega a la lista y queda elegido
+const KIND={'cj-j':'juego','cp-t':'tipos','cp-f':'formatos'};
+const PH={juego:'Nombre',tipos:'Nombre',formatos:'Nombre'};
+function selectDe(cls,val){const kind=KIND[cls];const lista=kind==='juego'?(S.juegos||[]):contCfg()[kind];
+  return `<select class="${cls}" aria-label="${kind==='juego'?'Juego':kind==='tipos'?'Tipo':'Formato'}">${opciones(lista,val,kind==='juego'?'— elegir juego —':kind==='tipos'?'— tipo —':'— formato —')}</select>`}
+$('#calForm').addEventListener('change',e=>{const el=e.target;if(el.tagName!=='SELECT'||el.value!=='__nuevo__')return;const cls=[...el.classList].find(c=>KIND[c]);if(!cls)return;
+  const w0=document.createElement('span');w0.className='cj-newwrap';w0.dataset.cls=cls;
+  w0.innerHTML=`<input type="text" class="cj-new" placeholder="${PH[KIND[cls]]}" aria-label="${PH[KIND[cls]]}"><button type="button" class="ib" data-newok="1" title="Crear" aria-label="Crear">✓</button><button type="button" class="ib" data-newno="1" title="Cancelar" aria-label="Cancelar">✕</button>`;
+  el.replaceWith(w0);w0.querySelector('input').focus()});
+function confirmarNuevo(wrap){const cls=wrap.dataset.cls,kind=KIND[cls],n=wrap.querySelector('input').value.trim();
+  if(!n){wrap.outerHTML=selectDe(cls,'');return}
+  if(!need())return;
+  if(kind==='juego'){const ya=(S.juegos||[]).find(j=>norm(j.nombre)===norm(n));
+    if(!ya){const usados=S.juegos.map(j=>colorJuego(j.nombre));const col=PALETA_JUEGOS.find(c=>!usados.includes(c))||PALETA_JUEGOS[S.juegos.length%PALETA_JUEGOS.length];
+      S.juegos=S.juegos.concat({nombre:n,bono:'',color:col});w(db.doc('config/juegos').set({lista:S.juegos}).then(()=>toast('Juego creado')))}
+    wrap.outerHTML=selectDe(cls,ya?ya.nombre:n)}
+  else{const cfg=copiaCont();const ya=cfg[kind].find(x=>norm(x.nombre)===norm(n));
+    if(!ya){const usados=cfg.tipos.concat(cfg.formatos).map(x=>x.color.toUpperCase());const col=PALETA_CONT.find(c=>!usados.includes(c.toUpperCase()))||PALETA_CONT[usados.length%PALETA_CONT.length];
+      cfg[kind].push({nombre:n,color:col});S.cont=cfg;w(db.doc('config/contenido').set(cfg).then(()=>toast(kind==='tipos'?'Tipo creado':'Formato creado')))}
+    wrap.outerHTML=selectDe(cls,ya?ya.nombre:n)}
+  $('#bonoLegend').innerHTML=calMode==='juegos'?S.juegos.map(j=>`<span><span class="cchip" style="background:${colorJuego(j.nombre)}">${esc(j.nombre)}</span> ${esc(j.bono||'')}</span>`).join(''):contCfg().tipos.concat(contCfg().formatos).map(x=>chipC(x.nombre,x.color)).join('');
+  renderCatalogo();renderCatCont()}
+$('#calForm').addEventListener('click',e=>{const b=e.target.closest('[data-newok],[data-newno]');if(!b)return;const wrap=b.closest('.cj-newwrap');
+  if(b.dataset.newno){wrap.outerHTML=selectDe(wrap.dataset.cls,'');return}confirmarNuevo(wrap)});
+$('#calForm').addEventListener('keydown',e=>{if(!e.target.classList.contains('cj-new'))return;if(e.key==='Enter'){e.preventDefault();confirmarNuevo(e.target.closest('.cj-newwrap'))}
+  if(e.key==='Escape'){const wrap=e.target.closest('.cj-newwrap');wrap.outerHTML=selectDe(wrap.dataset.cls,'')}});
+$('#cPubAdd').onclick=()=>{$('#cPubs').insertAdjacentHTML('beforeend',filaPub({}));const r=$('#cPubs').lastElementChild;r&&r.querySelector('select').focus()};
+$('#cPubs').addEventListener('click',e=>{const b=e.target.closest('[data-cpdel]');if(!b)return;b.closest('.cj-row').remove();if(!$('#cPubs').children.length)$('#cPubs').innerHTML=filaPub({})});
+function renderCatCont(){const cfg=contCfg();
+  [['tipos','#catTipos'],['formatos','#catFormatos']].forEach(([k,sel])=>{$(sel).innerHTML=cfg[k].map((x,i)=>`<li><input type="color" class="cat-color" data-cck="${k}" data-cci="${i}" value="${x.color}" aria-label="Color de ${esc(x.nombre)}" title="Cambiar color"><span style="flex:1">${chipC(x.nombre,x.color)}</span><button type="button" class="ib del" data-ccdel="${k}|${i}" aria-label="Quitar ${esc(x.nombre)}" title="Quitar">×</button></li>`).join('')||'<li class="empty">Vacío.</li>'})}
+function guardarCont(cfg,msg){S.cont=cfg;renderCal();w(db.doc('config/contenido').set(cfg).then(()=>toast(msg)))}
+const copiaCont=()=>JSON.parse(JSON.stringify(contCfg()));
+$('#catCBtn').onclick=()=>{$('#catCont').hidden=!$('#catCont').hidden};
+$('#catCont').addEventListener('change',e=>{const k=e.target.dataset.cck;if(!k||!need())return;const cfg=copiaCont();cfg[k][Number(e.target.dataset.cci)].color=e.target.value;guardarCont(cfg,'Color guardado')});
+$('#catCont').addEventListener('click',e=>{const b=e.target.closest('[data-ccdel]');if(!b||!need()||!armed(b))return;const [k,i]=b.dataset.ccdel.split('|');const cfg=copiaCont();cfg[k].splice(Number(i),1);guardarCont(cfg,'Quitado de la lista')});
+document.querySelectorAll('#catCont form[data-catc]').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();if(!need())return;const inp=f.querySelector('input');const n=inp.value.trim();if(!n)return;const k=f.dataset.catc;const cfg=copiaCont();
+  if(cfg[k].some(x=>norm(x.nombre)===norm(n))){toast('Ya está en la lista');return}
+  const usados=cfg.tipos.concat(cfg.formatos).map(x=>x.color.toUpperCase());const col=PALETA_CONT.find(c=>!usados.includes(c.toUpperCase()))||PALETA_CONT[usados.length%PALETA_CONT.length];
+  cfg[k].push({nombre:n,color:col});inp.value='';guardarCont(cfg,'Agregado')}));
+$('#cJuegoAdd').onclick=()=>{$('#cJuegos').insertAdjacentHTML('beforeend',filaJuego({}));const r=$('#cJuegos').lastElementChild;r&&r.querySelector('select').focus()};
+$('#cJuegos').addEventListener('click',e=>{const b=e.target.closest('[data-cjdel]');if(!b)return;b.closest('.cj-row').remove();if(!$('#cJuegos').children.length)$('#cJuegos').innerHTML=filaJuego({})});
+function renderCatalogo(){const l=S.juegos||[];
+  $('#catList').innerHTML=l.length?l.map((j,i)=>`<li><input type="color" class="cat-color" data-catcolor="${i}" value="${colorJuego(j.nombre)}" aria-label="Color de ${esc(j.nombre)}" title="Cambiar color"><span style="flex:1"><span class="cchip" style="background:${colorJuego(j.nombre)};font-size:.8rem">${esc(j.nombre)}</span></span><span class="chip">${esc(j.bono||'sin bono')}</span><button type="button" class="ib del" data-catdel="${i}" aria-label="Quitar ${esc(j.nombre)}" title="Quitar">×</button></li>`).join(''):'<li class="empty">Sin juegos cargados.</li>'}
+$('#catList').addEventListener('change',e=>{const i=e.target.dataset.catcolor;if(i==null||!need())return;const l=S.juegos.map(x=>Object.assign({},x));l[Number(i)].color=e.target.value;S.juegos=l;renderCal();w(db.doc('config/juegos').set({lista:l}).then(()=>toast('Color guardado')))});
+$('#catBtn').onclick=()=>{$('#catJuegos').hidden=!$('#catJuegos').hidden;if(!$('#catJuegos').hidden)$('#catNom').focus()};
+$('#catList').addEventListener('click',e=>{const b=e.target.closest('[data-catdel]');if(!b||!need()||!armed(b))return;const l=S.juegos.slice();l.splice(Number(b.dataset.catdel),1);S.juegos=l;renderCal();w(db.doc('config/juegos').set({lista:l}).then(()=>toast('Juego quitado de la lista')))});
+$('#catForm').onsubmit=e=>{e.preventDefault();if(!need())return;const n=$('#catNom').value.trim();if(!n){$('#catNom').focus();return}
+  if(S.juegos.some(j=>j.nombre.toLowerCase()===n.toLowerCase())){toast('Ese juego ya está en la lista');return}
+  const usados=S.juegos.map(j=>colorJuego(j.nombre));const col=PALETA_JUEGOS.find(c=>!usados.includes(c))||PALETA_JUEGOS[S.juegos.length%PALETA_JUEGOS.length];const l=S.juegos.concat({nombre:n,bono:$('#catBono').value.trim(),color:col});S.juegos=l;$('#catNom').value='';$('#catBono').value='';renderCal();w(db.doc('config/juegos').set({lista:l}).then(()=>toast('Juego agregado')))};
 $('#calClear').onclick=e=>{if(!need()||!selDay||!armed(e.currentTarget))return;const dias=cloneMonth(calMes);const c=dias[String(selDay)]||{};
-  if(calMode==='juegos'){delete c.juego;delete c.horario}else if(calMode==='push')delete c.push;else delete c.contenido;dias[String(selDay)]=c;e.currentTarget.blur();saveMonth(calMes,dias,'Día vaciado')};
+  if(calMode==='juegos'){delete c.juego;delete c.horario;delete c.juegos;delete c.nota}else c.contenido=[];dias[String(selDay)]=c;e.currentTarget.blur();saveMonth(calMes,dias,calMode==='juegos'?'Día vaciado':'Día vaciado (deja de repetirse desde este mes)')};
 
-function renderAll(){renderHoy();applySp();renderSpam();renderCaj();renderCal()}
+function renderAll(){renderHoy();applySp();renderSpam();if(!$('#publiForm').contains(document.activeElement))loadPubli($('#gFecha').value);renderCaj();renderCal()}
 renderAll();
 
 /* ---------- DATOS ---------- */
 let unErr=null;const unCal={};
 function err(e){console.error(e);$('#statusTxt').textContent='Error de conexión';$('#dot').classList.remove('on')}
 function subErr(){if(!db||unErr)return;unErr=db.collection('errores').onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());S.errAll=o;S.errores=o[cjMes]||null;renderCaj()},err)}
-function subCal(k){if(!db||unCal[k])return;unCal[k]=db.doc('calendario/'+k).onSnapshot(s=>{S.cal[k]=s.exists?(s.data().dias||{}):{};if(k===mesHoy)S.calReady=true;renderCal();renderHoy()},err)}
+let calTodo=false;
+function subCal(k){if(!db||unCal[k]||calTodo)return;unCal[k]=db.doc('calendario/'+k).onSnapshot(s=>{S.cal[k]=s.exists?(s.data().dias||{}):{};if(k===mesHoy)S.calReady=true;renderCal();renderHoy()},err)}
 $('#cjMes').onchange=()=>{cjMes=$('#cjMes').value||mesHoy;S.errores=S.errAll[cjMes]||null;renderCaj()};
 
 (async()=>{
@@ -744,11 +1046,13 @@ $('#cjMes').onchange=()=>{cjMes=$('#cjMes').value||mesHoy;S.errores=S.errAll[cjM
   db.collection('tareas').onSnapshot(s=>{S.tareas=s.docs.map(d=>Object.assign({id:d.id},d.data()));S.ready=true;renderHoy()},err);
   db.collection('checks').onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=Object.assign({},(d.data()||{}).ids));S.checks=o;S.checksDia=Object.assign({},o[today]||{});S.checksSem=Object.assign({},o[weekKey]||{});renderHoy()},err);
   db.collection('diario').onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=d.data());S.diario=o;renderSpam();renderHoy();
-    const a=document.activeElement;if(!a||!a.closest||!a.closest('#spamForm'))fill(SPAM_FORM,'#fFecha',$('#fFecha').value);if(!a||!a.closest||!a.closest('#publiForm'))fill(PUBLI_FORM,'#gFecha',$('#gFecha').value)},err);
+    const a=document.activeElement;if(!a||!a.closest||!a.closest('#spamForm'))fill(SPAM_FORM,'#fFecha',$('#fFecha').value);if(!a||!a.closest||!a.closest('#publiForm'))loadPubli($('#gFecha').value)},err);
   db.doc('config/horarios').onSnapshot(s=>{S.horarios=s.exists?s.data():null;renderCaj()},err);
   db.doc('privado/equipo').onSnapshot(s=>{S.equipo=s.exists?(s.data().lista||[]):[];renderCaj()},err);
+  db.doc('config/contenido').onSnapshot(s=>{S.cont=s.exists?s.data():null;renderCal()},err);
   db.doc('config/juegos').onSnapshot(s=>{S.juegos=s.exists?(s.data().lista||[]):[];renderCal()},err);
-  subErr();subCal(mesHoy);
+  calTodo=true;db.collection('calendario').onSnapshot(s=>{const o={};s.docs.forEach(d=>o[d.id]=(d.data()||{}).dias||{});S.cal=o;S.calReady=true;renderCal();renderHoy()},err);
+  subErr();
 })();
 })();
 </script>

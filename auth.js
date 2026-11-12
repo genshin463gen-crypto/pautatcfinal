@@ -58,7 +58,7 @@ async function entrar(session){
   const {data:perfil}=await sb.from('perfiles').select('*').eq('id',session.user.id).maybeSingle();
   if(!perfil||!perfil.activo){await sb.auth.signOut();$('#loginErr').textContent='Tu usuario no está habilitado. Pedile acceso al administrador.';return}
   const admin=perfil.rol==='admin';
-  if(!admin&&!$('#tab-usuarios').hidden)document.querySelector('[data-tab=hoy]').click();
+  if(!admin&&(!$('#tab-usuarios').hidden||!$('#tab-boveda').hidden))document.querySelector('[data-tab=hoy]').click();
   document.body.classList.remove('locked');document.body.classList.toggle('is-admin',admin);
   $('#who').textContent=perfil.nombre||perfil.usuario;
   const db=makeDb();
@@ -93,8 +93,7 @@ const SECCIONES=[
   {g:'Cajeros',k:'cajeros_horarios',l:'Horarios'},
   {g:'Cajeros',k:'cajeros_equipo',l:'Equipo (CBU y sueldos)'},
   {g:'Calendario',k:'cal_juegos',l:'Calendario de juegos'},
-  {g:'Calendario',k:'cal_contenido',l:'Calendario de contenido'},
-  {g:'Calendario',k:'cal_push',l:'Calendario de push'}];
+  {g:'Calendario',k:'cal_contenido',l:'Calendario de contenido'}];
 const ROLES=[{k:'admin',l:'Administrador'},{k:'gerente',l:'Gerente'},{k:'usuario',l:'Usuario'}];
 const NIVELES=[{k:'oculto',l:'Oculto'},{k:'ver',l:'Solo ver'},{k:'editar',l:'Ver y editar'}];
 function nivelDefault(rol,k){if(k==='cajeros_equipo')return rol==='admin'?'editar':rol==='gerente'?'ver':'oculto';return 'editar'}
@@ -106,13 +105,15 @@ function seccionesDe(path,nuevo,viejo){
   if(path.startsWith('tareas/')){const t=(nuevo.tipo||viejo.tipo);s.add(t==='diaria'?'hoy_diarias':t==='semanal'?'hoy_semanales':'hoy_pendientes')}
   else if(path.startsWith('checks/w-'))s.add('hoy_semanales');
   else if(path.startsWith('checks/'))s.add('hoy_diarias');
-  else if(path.startsWith('diario/')){const SP=['bm','celus','clientes','nota'],PB=['gasto','fondeo','mensajes','convertidos','notaPubli'];
+  else if(path.startsWith('diario/')){const SP=['bm','celus','clientes','nota'],PB=['gasto','fondeo','mensajes','convertidos','notaPubli','campanas'];
     const cambio=f=>JSON.stringify(nuevo[f])!==JSON.stringify(viejo[f]);if(SP.some(cambio))s.add('spam_spam');if(PB.some(cambio))s.add('spam_publi')}
   else if(path.startsWith('calendario/')){const a=nuevo.dias||{},b=viejo.dias||{};
     new Set([...Object.keys(a),...Object.keys(b)]).forEach(d=>{const x=a[d]||{},y=b[d]||{},eq=(...f)=>f.every(k=>JSON.stringify(x[k])===JSON.stringify(y[k]));
-      if(!eq('pendientes'))s.add('hoy_mensuales');if(!eq('juego','horario'))s.add('cal_juegos');if(!eq('contenido'))s.add('cal_contenido');if(!eq('push'))s.add('cal_push')})}
+      if(!eq('pendientes'))s.add('hoy_mensuales');if(!eq('juego','horario','juegos','nota'))s.add('cal_juegos');if(!eq('contenido'))s.add('cal_contenido')})}
   else if(path.startsWith('errores/'))s.add('cajeros_errores');
   else if(path==='config/horarios')s.add('cajeros_horarios');
+  else if(path==='config/juegos')s.add('cal_juegos');
+  else if(path==='config/contenido')s.add('cal_contenido');
   else if(path.startsWith('privado/'))s.add('cajeros_equipo');
   return [...s]}
 function puedeEscribir(path,nuevo,viejo){if(path==='config/permisos'||path==='config/responsables')return MI_ROL==='admin';
