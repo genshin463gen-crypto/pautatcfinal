@@ -106,7 +106,7 @@ function seccionesDe(path,nuevo,viejo){
   if(path.startsWith('tareas/')){const t=(nuevo.tipo||viejo.tipo);s.add(t==='diaria'?'hoy_diarias':t==='semanal'?'hoy_semanales':'hoy_pendientes')}
   else if(path.startsWith('checks/w-'))s.add('hoy_semanales');
   else if(path.startsWith('checks/'))s.add('hoy_diarias');
-  else if(path.startsWith('diario/')){const SP=['bm','celus','clientes','nota'],PB=['gasto','fondeo','mensajes','convertidos','notaPubli','campanas'];
+  else if(path.startsWith('diario/')){const SP=['bm','celus','clientes','nota','envios'],PB=['gasto','fondeo','mensajes','convertidos','notaPubli','campanas'];
     const cambio=f=>JSON.stringify(nuevo[f])!==JSON.stringify(viejo[f]);if(SP.some(cambio))s.add('spam_spam');if(PB.some(cambio))s.add('spam_publi')}
   else if(path.startsWith('calendario/')){const a=nuevo.dias||{},b=viejo.dias||{};
     new Set([...Object.keys(a),...Object.keys(b)]).forEach(d=>{const x=a[d]||{},y=b[d]||{},eq=(...f)=>f.every(k=>JSON.stringify(x[k])===JSON.stringify(y[k]));
